@@ -11,6 +11,6 @@ curl http://193.196.37.32/openflight/airports.dat >> airports.dat
 curl http://193.196.37.32/openflight/planes.dat >> planes.dat
 curl http://193.196.37.32/openflight/routes.dat >> routes.dat
 
-hadoop fs -puts /tmp/openflight /tmp/openflight
+hadoop fs -put /tmp/openflight /tmp/openflight
 
 exit 0;
