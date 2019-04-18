@@ -1,4 +1,4 @@
-records = LOAD $input using PigStorage('\t') AS (year:int, temp:int, quality:int);
+records = LOAD '$input' using PigStorage('\t') AS (year:int, temp:int, quality:int);
 frecords = FILTER records by quality == 0 or quality == 1;
 minrec = ORDER frecords BY temp ASC;
 maxrec = ORDER frecords BY temp DESC;
