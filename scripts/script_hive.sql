@@ -17,7 +17,7 @@ hive> CREATE EXTERNAL TABLE IF NOT EXISTS Airports_dat(
     > COMMENT 'Airports'
     > ROW FORMAT DELIMITED
     > FIELDS TERMINATED BY ','
-    > STORED AS DAT
+    > STORED AS TEXTFILE
     > LOCATION '/tmp/openflight';
 OK
 
@@ -26,7 +26,7 @@ hive> CREATE TABLE IF NOT EXISTS Airports(
     > Country STRING, IATA STRING, ICAO STRING, Latitude DOUBLE, Longitude DOUBLE, Altitude INT,
     > Timezone DOUBLE, DST CHAR, Tz STRING, Type STRING, Source STRING)    
     > COMMENT 'Airports'
-    > STORED AS TEXTFILE;
+    > STORED AS ORC;
 OK
 
 hive> INSERT OVERWRITE TABLE Airports SELECT * FROM Airports_dat;
@@ -38,7 +38,7 @@ hive> CREATE EXTERNAL TABLE IF NOT EXISTS Airlines_dat(
     > COMMENT 'Airlines'
     > ROW FORMAT DELIMITED
     > FIELDS TERMINATED BY ','
-    > STORED AS DAT
+    > STORED AS TEXTFILE
     > LOCATION '/tmp/openflight';
 OK
 
@@ -46,7 +46,7 @@ hive> CREATE TABLE IF NOT EXISTS Airlines(
     > AirlineID INT, AirlineName STRING, Alias STRING,
     > IATA STRING, ICAO STRING, Callsign STRING, Country STRING, Active CHAR
     > COMMENT 'Airlines'   
-    > STORED AS TEXTFILE;
+    > STORED AS ORC;
 OK
 
 hive> INSERT OVERWRITE TABLE Airlines SELECT * FROM Airlines_dat;
@@ -58,14 +58,14 @@ hive> CREATE EXTERNAL TABLE IF NOT EXISTS Planes_dat(
     > COMMENT 'Plane'
     > ROW FORMAT DELIMITED
     > FIELDS TERMINATED BY ','
-    > STORED AS DAT
+    > STORED AS TEXTFILE
     > LOCATION '/tmp/openflight';
 OK
 
 hive> CREATE TABLE IF NOT EXISTS Planes(
     > PlaneName STRING, IATA STRING, ICAO STRING   
     > COMMENT 'Planes'
-    > STORED AS TEXTFILE;
+    > STORED AS ORC;
 OK
 
 hive> INSERT OVERWRITE TABLE Planes SELECT * FROM Planes_dat;
@@ -77,7 +77,7 @@ hive> CREATE EXTERNAL TABLE IF NOT EXISTS Routes_dat(
     > COMMENT 'Routes'
     > ROW FORMAT DELIMITED
     > FIELDS TERMINATED BY ','
-    > STORED AS DAT
+    > STORED AS TEXTFILE
     > LOCATION '/tmp/openflight';
 OK
 
@@ -85,7 +85,7 @@ hive> CREATE TABLE IF NOT EXISTS Routes(
     > Airline STRING, AirlineID INT, 
     > Destination STRING, DestinationID INT, Codeshare CHAR, Stops INT, Equipment STRING
     > COMMENT 'Routes'
-    > STORED AS TEXTFILE;
+    > STORED AS ORC;
 OK
 
 hive> INSERT OVERWRITE TABLE Routes SELECT * FROM Routes_dat;
