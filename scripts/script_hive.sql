@@ -34,7 +34,7 @@ INSERT OVERWRITE TABLE Airports SELECT * FROM Airports_dat;
 
 CREATE EXTERNAL TABLE IF NOT EXISTS Airlines_dat(
 AirlineID INT, AirlineName STRING, Alias STRING,
-IATA STRING, ICAO STRING, Callsign STRING, Country STRING, Active CHAR(10)
+IATA STRING, ICAO STRING, Callsign STRING, Country STRING, Active CHAR(10))
 COMMENT 'Airlines'
 ROW FORMAT DELIMITED
 FIELDS TERMINATED BY ','
@@ -44,7 +44,7 @@ LOCATION '/tmp/openflight/database';
 
 CREATE TABLE IF NOT EXISTS Airlines(
 AirlineID INT, AirlineName STRING, Alias STRING,
-IATA STRING, ICAO STRING, Callsign STRING, Country STRING, Active CHAR(10)
+IATA STRING, ICAO STRING, Callsign STRING, Country STRING, Active CHAR(10))
 COMMENT 'Airlines'   
 STORED AS ORC;
 
@@ -54,7 +54,7 @@ INSERT OVERWRITE TABLE Airlines SELECT * FROM Airlines_dat;
 
 
 CREATE EXTERNAL TABLE IF NOT EXISTS Planes_dat(
-PlaneName STRING, IATA STRING, ICAO STRING
+PlaneName STRING, IATA STRING, ICAO STRING)
 COMMENT 'Plane'
 ROW FORMAT DELIMITED
 FIELDS TERMINATED BY ','
@@ -62,7 +62,7 @@ STORED AS TEXTFILE
 LOCATION '/tmp/openflight/database';
 
 CREATE TABLE IF NOT EXISTS Planes(
-PlaneName STRING, IATA STRING, ICAO STRING   
+PlaneName STRING, IATA STRING, ICAO STRING)
 COMMENT 'Planes'
 STORED AS ORC;
 
@@ -72,7 +72,7 @@ INSERT OVERWRITE TABLE Planes SELECT * FROM Planes_dat;
 
 CREATE EXTERNAL TABLE IF NOT EXISTS Routes_dat(
 Airline STRING, AirlineID INT, 
-Destination STRING, DestinationID INT, Codeshare CHAR(10), Stops INT, Equipment STRING
+Destination STRING, DestinationID INT, Codeshare CHAR(10), Stops INT, Equipment STRING)
 COMMENT 'Routes'
 ROW FORMAT DELIMITED
 FIELDS TERMINATED BY ','
@@ -82,7 +82,7 @@ LOCATION '/tmp/openflight/database';
 
 CREATE TABLE IF NOT EXISTS Routes(
 Airline STRING, AirlineID INT, 
-Destination STRING, DestinationID INT, Codeshare CHAR(10), Stops INT, Equipment STRING
+Destination STRING, DestinationID INT, Codeshare CHAR(10), Stops INT, Equipment STRING)
 COMMENT 'Routes'
 STORED AS ORC;
 
