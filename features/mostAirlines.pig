@@ -2,5 +2,5 @@ records = LOAD '/tmp/openflight/airlines.dat' using PigStorage(',') AS (airlinei
 countries = GROUP records BY country;
 numOfAirlines = FOREACH countries GENERATE group, COUNT(records.airlineid) AS NumberOfAirlines;
 ordered = ORDER numOfAirlines BY NumberOfAirlines DESC;
-max = LIMIT ordered 1;
+max = LIMIT ordered $limit;
 STORE max INTO '/tmp/openflight/output/numOfAirlines/' using PigStorage(',');
