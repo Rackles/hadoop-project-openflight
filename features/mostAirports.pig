@@ -3,4 +3,4 @@ countries = GROUP records BY country;
 numOfAirports = FOREACH countries GENERATE group, COUNT(records.airportid) AS NumberOfAirports;
 ordered = ORDER numOfAirports BY NumberOfAirports DESC;
 max = LIMIT ordered 1;
-STORE numOfAirports INTO '/tmp/openflight/output/numOfAirports/' using PigStorage(',');
+STORE max INTO '/tmp/openflight/output/numOfAirports/' using PigStorage(',');
