@@ -5,5 +5,7 @@ maxrec = ORDER frecords BY temp DESC;
 min = LIMIT minrec 1;
 STORE min INTO 'openflight/georgenp/lab5/data/output/t1.txt' using PigStorage('\t');
 max = LIMIT maxrec 1;
+STORE avg INTO 'openflight/georgenp/lab5/data/output/t1.txt' using PigStorage('\t');
 grouped = GROUP frecords ALL;
 avg = FOREACH grouped GENERATE AVG(frecords.temp);
+STORE avg INTO 'openflight/georgenp/lab5/data/output/t1.txt' using PigStorage('\t');
