@@ -2,5 +2,5 @@ records = LOAD '/tmp/openflight/airlines.dat' using PigStorage(',') AS (airlinei
 countries = GROUP records BY country;
 numOfAirlines = FOREACH countries GENERATE group, COUNT(records.airlineid) AS NumberOfAirlines;
 groupAll = GROUP numOfAirlines ALL;
-max = FOREACH groupAll GENERATE countries.country, MAX(countries.NumberOfAirlines)
+max = FOREACH groupAll GENERATE numOfAirlines.country, MAX(numOfAirlines.NumberOfAirlines);
 STORE numOfAirlines INTO 'NumberOfAirlines' USING org.apache.hive.hcatalog.pig.HCatStorer();
