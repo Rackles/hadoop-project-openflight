@@ -1,6 +1,6 @@
 REGISTER Task3Jar.jar;
 records = LOAD '$input' using PigStorage('\t') AS (year:int, temp:int, quality:int);
-frecords = FILTER records by edu.rosehulman.georgenp.QualityIsValid(records);
+frecords = FILTER records by edu.rosehulman.georgenp.QualityIsValid(records.quality);
 grouped = GROUP frecords BY year;
 minrec = ORDER grouped BY temp ASC;
 maxrec = ORDER grouped BY temp DESC;
