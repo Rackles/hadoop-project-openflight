@@ -8,5 +8,5 @@ min = LIMIT minrec 1;
 STORE min INTO '${output}/min' using PigStorage('\t');
 max = LIMIT maxrec 1;
 STORE min INTO '${output}/max' using PigStorage('\t');
-avg = FOREACH grouped GENERATE AVG(grouped.temp);
+avg = FOREACH grouped GENERATE AVG(frecords.temp);
 STORE avg INTO '${output}/avg' using PigStorage('\t');
