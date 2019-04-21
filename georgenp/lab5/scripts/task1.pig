@@ -5,7 +5,7 @@ maxrec = ORDER frecords BY temp DESC;
 min = LIMIT minrec 1;
 STORE min INTO '${output}/min' using PigStorage('\t');
 max = LIMIT maxrec 1;
-STORE min INTO '${output}/max' using PigStorage('\t');
+STORE max INTO '${output}/max' using PigStorage('\t');
 grouped = GROUP frecords ALL;
 avg = FOREACH grouped GENERATE AVG(frecords.temp);
 STORE avg INTO '${output}/avg' using PigStorage('\t');
