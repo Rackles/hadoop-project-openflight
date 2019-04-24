@@ -16,4 +16,6 @@ counted = FOREACH grouped {
 
 stats = FOREACH counted GENERATE sitename, edu.rosehulman.georgenp.Ratio(hits, total), edu.rosehulman.georgenp.Ratio(miss, total), year, month, day, hour;
 
-STORE stats INTO CONCAT('${output}/', CONCAT(year, CONCAT('-', CONCAT(month, CONCAT('-', day))))) using PigStorage('\t');
+%declare outdir CONCAT('${output}/', CONCAT(year, CONCAT('-', CONCAT(month, CONCAT('-', day)))));
+
+STORE stats INTO '$outdir' using PigStorage('\t');
