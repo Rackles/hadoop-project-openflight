@@ -12,4 +12,4 @@ joined = JOIN counted BY group LEFT OUTER, filteredairlines BY airlineID;
 
 finalOutput = FOREACH joined GENERATE group, iata, airlineName, total;
 
-STORE finalOutput INTO '/tmp/openflight/output/' using PigStorage('\t');
+STORE finalOutput INTO '/tmp/openflight/output/numberOfRoutes' using PigStorage('\t');
