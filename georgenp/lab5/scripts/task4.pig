@@ -8,12 +8,12 @@ grouped = GROUP crecords BY (sitename, year, month, day, hour);
 
 counted = FOREACH grouped {
 			hitsOnly = FILTER crecords BY xedgeresulttype == 'Hit';
-			missOnly = FILTER crecords BY xedgeresulttype == 'Miss';
+			missOnly = FILTER crecords BY xedgeresulttype != 'Hit';
 			
 			GENERATE FLATTEN(group), COUNT(hitsOnly) AS hits, COUNT(missOnly) AS miss, COUNT(crecords) AS total;
 		};
 
 
-stats = FOREACH counted GENERATE sitename, year, month, day, hour, edu.rosehulman.georgenp.Ratio(hits, total), edu.rosehulman.georgenp.Ratio(miss, total);
+stats = FOREACH counted GENERATE sitename, edu.rosehulman.georgenp.Ratio(hits, total), edu.rosehulman.georgenp.Ratio(miss, total), year, month, day, hour;
 
-STORE stats INTO '${output}/tmp' using PigStorage('\t');
+STORE stats INTO '${output}/{year}-{month}-{day}' using PigStorage('\t');
