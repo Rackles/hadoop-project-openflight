@@ -10,7 +10,7 @@ counted = FOREACH grouped {
 			hitsOnly = FILTER crecords BY xedgeresulttype == 'Hit';
 			missOnly = FILTER crecords BY xedgeresulttype == 'Miss';
 			
-			GENERATE group, year, month, day, hour, sitename, xedgeresulttype, COUNT(hitsOnly) AS hits, COUNT(missOnly) AS miss, COUNT(crecords) AS total;
+			GENERATE group, COUNT(hitsOnly) AS hits, COUNT(missOnly) AS miss, COUNT(crecords) AS total;
 		};
 
 --total = FOREACH grouped COUNT(crecords);
