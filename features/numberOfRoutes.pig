@@ -6,10 +6,12 @@ filteredairlines = FILTER airlines BY airlineID is not null AND airlineName is n
 
 grouped = GROUP filteredroutes BY airlineID;
 
-counted = FOREACH grouped GENERATE group, COUNT(filteredroutes) AS total;
+counted = FOREACH grouped GENERATE FLATTEN(group), COUNT(filteredroutes) AS total;
 
-joined = JOIN counted BY group LEFT OUTER, filteredairlines BY airlineID;
+joined = JOIN counted BY airlineID LEFT OUTER, filteredairlines BY airlineID;
 
-finalOutput = FOREACH joined GENERATE group, iata, airlineName, total;
+groupJoined = GROUP joined BY (airlineID, iata, airlineName, total)
+
+finalOutput = FOREACH groupJoined GENERATE FLATTEN(group);
 
 STORE finalOutput INTO '/tmp/openflight/output/numberOfRoutes' using PigStorage('\t');
