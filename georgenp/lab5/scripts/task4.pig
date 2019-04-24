@@ -16,4 +16,4 @@ counted = FOREACH grouped {
 
 stats = FOREACH counted GENERATE date, sitename, edu.rosehulman.georgenp.Ratio(hits, total), edu.rosehulman.georgenp.Ratio(miss, total), FLATTEN(STRSPLIT(date, '-')) AS (year:int, month:int, day:int), hour;
 
-STORE stats INTO '$output' using org.apache.pig.piggybank.storage.MultiStorage('$output', '0', 'none', '\t', 'True');
+STORE stats INTO '$output' using org.apache.pig.piggybank.storage.MultiStorage('$output', '0', 'none', '\t', 'true');
