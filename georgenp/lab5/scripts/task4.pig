@@ -16,4 +16,4 @@ counted = FOREACH grouped {
 
 stats = FOREACH counted GENERATE sitename, edu.rosehulman.georgenp.Ratio(hits, total), edu.rosehulman.georgenp.Ratio(miss, total), year, month, day, hour;
 
-STORE stats INTO '${output}/${year}-${month}-${day}' using PigStorage('\t');
+STORE stats INTO CONCAT('${output}/', CONCAT(year, CONCAT('-', CONCAT(month, CONCAT('-', day))))) using PigStorage('\t');
