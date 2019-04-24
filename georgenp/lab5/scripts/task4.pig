@@ -4,13 +4,18 @@ ranked = RANK records;
 frecords = FILTER ranked BY $0 > 2;
 crecords = FOREACH frecords GENERATE FLATTEN(STRSPLIT(date, '-')) AS (year:int, month:int, day:int), FLATTEN(STRSPLIT(time,':')) AS (hour:int, min:int, sec:int), FLATTEN(STRSPLIT(csuristem, '/', 4)) AS (blank:chararray, blog:chararray, sitename:chararray, misc:chararray), xedgeresulttype;
 nrecords = FOREACH crecords GENERATE year, month, day, hour, sitename, xedgeresulttype;
---grouped = GROUP crecords BY (sitename, year, month, day, hour);
---hitsOnly = FILTER grouped BY xedgeresulttype == 'hit';
---missOnly = FILTER grouped BY xedgeresulttype == 'miss';
+grouped = GROUP crecords BY (sitename, year, month, day, hour);
 
---total = FOREACH grouped COUNT crecords;
---hits = FOREACH hitsOnly COUNT crecords;
---misses = FOREACH missOnly COUNT crecords;
---stats = FOREACH grouped GENERATE sitename, edu.rosehulman.georgenp.Ratio(hits, total), edu.rosehulman.georgenp.Ratio(errors, total), year, month, day, hour;
+counted = FOREACH grouped {
+			hitsOnly = FILTER crecords BY xedgeresulttype == 'Hit';
+			missOnly = FILTER crecords BY xedgeresulttype == 'Miss';
+			
+			GENERATE group, year, month, day, hour, sitename, xedgeresulttype, COUNT(hitsOnly) AS hits, COUNT(missOnly) AS miss, COUNT(crecords) AS total;
+		};
 
-STORE nrecords INTO '${output}/tmp' using PigStorage('\t');
+--total = FOREACH grouped COUNT(crecords);
+--hits = FOREACH hitsOnly COUNT(crecords);
+--misses = FOREACH missOnly COUNT(crecords);
+--stats = FOREACH grouped GENERATE sitename, edu.rosehulman.georgenp.Ratio(hits, total), edu.rosehulman.georgenp.Ratio(miss, total), year, month, day, hour;
+
+STORE counted '${output}/tmp' using PigStorage('\t');
