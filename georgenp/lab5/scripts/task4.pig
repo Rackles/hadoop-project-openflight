@@ -13,9 +13,7 @@ counted = FOREACH grouped {
 			GENERATE FLATTEN(group), COUNT(hitsOnly) AS hits, COUNT(missOnly) AS miss, COUNT(crecords) AS total;
 		};
 
---total = FOREACH grouped COUNT(crecords);
---hits = FOREACH hitsOnly COUNT(crecords);
---misses = FOREACH missOnly COUNT(crecords);
---stats = FOREACH grouped GENERATE sitename, edu.rosehulman.georgenp.Ratio(hits, total), edu.rosehulman.georgenp.Ratio(miss, total), year, month, day, hour;
 
-STORE counted INTO '${output}/tmp' using PigStorage('\t');
+stats = FOREACH counted GENERATE sitename, year, month, day, hour, edu.rosehulman.georgenp.Ratio(hits, total), edu.rosehulman.georgenp.Ratio(miss, total);
+
+STORE stats INTO '${output}/tmp' using PigStorage('\t');
