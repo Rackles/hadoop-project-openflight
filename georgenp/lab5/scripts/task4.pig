@@ -4,7 +4,7 @@ ranked = RANK records;
 frecords = FILTER ranked BY $0 > 2;
 crecords = FOREACH frecords GENERATE date, FLATTEN(STRSPLIT(time,':')) AS (hour:int, min:int, sec:int), FLATTEN(STRSPLIT(csuristem, '/', 4)) AS (blank:chararray, blog:chararray, sitename:chararray, misc:chararray), xedgeresulttype;
 nrecords = FOREACH crecords GENERATE date, hour, sitename, xedgeresulttype;
-grouped = GROUP crecords BY (sitename, date hour);
+grouped = GROUP crecords BY (sitename, date, hour);
 
 counted = FOREACH grouped {
 			hitsOnly = FILTER crecords BY xedgeresulttype == 'Hit';
