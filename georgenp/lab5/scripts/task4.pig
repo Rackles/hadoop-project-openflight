@@ -3,7 +3,7 @@ records = LOAD '$input' using PigStorage('\t')  AS (date:chararray, time:chararr
 ranked = RANK records;
 frecords = FILTER ranked BY $0 > 2;
 crecords = FOREACH frecords GENERATE FLATTEN(STRSPLIT(date, '-')) AS (year:int, month:int, day:int), FLATTEN(STRSPLIT(time,':')) AS (hour:int, min:int, sec:int), FLATTEN(STRSPLIT(csuristem, '/', 4)) AS (blank:chararray, blog:chararray, sitename:chararray, misc:chararray), xedgeresulttype;
-nrecords = FOREACH crecords GENERATE year, month, day, hour, sitename, xedgeresulttype;
+nrecords = FOREACH crecords GENERATE date, year, month, day, hour, sitename, xedgeresulttype;
 grouped = GROUP crecords BY (sitename, year, month, day, hour);
 
 counted = FOREACH grouped {
@@ -14,6 +14,6 @@ counted = FOREACH grouped {
 		};
 
 
-stats = FOREACH counted GENERATE sitename, edu.rosehulman.georgenp.Ratio(hits, total), edu.rosehulman.georgenp.Ratio(miss, total), year, month, day, hour;
+stats = FOREACH counted GENERATE date, sitename, edu.rosehulman.georgenp.Ratio(hits, total), edu.rosehulman.georgenp.Ratio(miss, total), year, month, day, hour;
 
-STORE stats INTO '$output' using org.apache.pig.piggybank.storage.MultiStorage('$output', '5', 'none', '\t');
+STORE stats INTO '$output' using org.apache.pig.piggybank.storage.MultiStorage('$output', '0', 'none', '\t', 'true');
