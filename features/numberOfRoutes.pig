@@ -8,7 +8,7 @@ grouped = GROUP filteredroutes BY airlineID;
 
 counted = FOREACH grouped GENERATE group, COUNT(filteredroutes) AS total;
 
-joined = JOIN counted BY airlineID LEFT OUTER, filteredairlines BY airlineID;
+joined = JOIN counted BY group LEFT OUTER, filteredairlines BY airlineID;
 
 finalOutput = FOREACH joined GENERATE group, iata, airlineName, total;
 
