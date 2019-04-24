@@ -18,4 +18,4 @@ counted = FOREACH grouped {
 --misses = FOREACH missOnly COUNT(crecords);
 --stats = FOREACH grouped GENERATE sitename, edu.rosehulman.georgenp.Ratio(hits, total), edu.rosehulman.georgenp.Ratio(miss, total), year, month, day, hour;
 
-STORE counted '${output}/tmp' using PigStorage('\t');
+STORE counted INTO '${output}/tmp' using PigStorage('\t');
