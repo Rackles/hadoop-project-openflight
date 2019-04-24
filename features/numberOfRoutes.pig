@@ -10,7 +10,7 @@ counted = FOREACH grouped GENERATE FLATTEN(group), COUNT(filteredroutes) AS tota
 
 joined = JOIN counted BY airlineID LEFT OUTER, filteredairlines BY airlineID;
 
-groupJoined = GROUP joined BY (airlineID, iata, airlineName, total)
+groupJoined = GROUP joined BY (airlineID, iata, airlineName, total);
 
 finalOutput = FOREACH groupJoined GENERATE FLATTEN(group);
 
