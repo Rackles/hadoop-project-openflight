@@ -1,6 +1,7 @@
 REGISTER Task4Jar.jar;
 records = LOAD '$input' using PigStorage('\t')  AS (date:chararray, time:chararray, xloc:chararray, sc:int, cip:chararray, csm:chararray, cs:chararray, csuristem:chararray, scs:chararray, csR:chararray, csU:chararray, csq:chararray, csC:chararray, xedgeresulttype:chararray, xedgerequestid:chararray);
-finalOutput = FILTER records BY $0>2;
+ranked = RANK records;
+finalOutput = FILTER ranked BY $0 > 2;
 --crecords = FOREACH frecords GENERATE FLATTEN(STRSPLIT(date, '-')) AS (year:int, month:int, day:int), FLATTEN(STRSPLIT(time,':')) AS (hour:int, min:int, sec:int), csuristem, xedgeresulttype;
 --grouped = GROUP crecords BY (csuristem, year, month, day, hour);
 --hitsOnly = FILTER grouped BY xedgeresulttype == 'hit';
