@@ -8,6 +8,8 @@ airports = FILTER ufairports BY id IS NOT NULL and latitude IS NOT NULL and long
 froutes = FILTER ufroutes BY sourceID IS NOT NULL and destinationID IS NOT NULL and equipment IS NOT NULL;
 routes = FOREACH froutes GENERATE sourceID, destinationID, FLATTEN(TOKENIZE(equipment, ' ')) AS equipmentID;
 
+STORE routes INTO '/tmp/openflight/output/planeDistances' using PigStorage(',');
+
 sourceAirports = FOREACH airports GENERATE id AS sID, latitude AS sLat, longitude as sLong;
 destAirports = FOREACH airports GENERATE id AS dID, latitude AS dLat, longitude as dLong;
 
@@ -21,4 +23,4 @@ grouped = GROUP praDistances BY planeIATA;
 
 finalOutput = FOREACH grouped GENERATE FLATTEN(group), MAX(praDistances.distance) AS max, AVG(praDistances.distance) AS avg, MIN(praDistances.distance) AS min, COUNT(praDistances) AS total;
 
-STORE finalOutput into '/tmp/openflight/output/planeDistances/' using PigStorage(',');
+--STORE finalOutput into '/tmp/openflight/output/planeDistances/' using PigStorage(',');
