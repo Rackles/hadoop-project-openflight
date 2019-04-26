@@ -14,7 +14,6 @@ sourceAirports = FOREACH airports GENERATE id AS sID, latitude AS sLat, longitud
 destAirports = FOREACH airports GENERATE id AS dID, latitude AS dLat, longitude as dLong;
 
 planeRoutes = JOIN planes BY piata, routes BY equipmentID;
-STORE planeRoutes INTO '/tmp/openflight/output/planeDistances' using PigStorage(',');
 
 planeRouteSource = JOIN planeRoutes BY sourceID, sourceAirports BY sID;
 planeRouteAirports = JOIN planeRouteSource BY destinationID, destAirports BY dID;
