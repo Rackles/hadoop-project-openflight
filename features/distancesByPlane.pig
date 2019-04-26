@@ -6,16 +6,20 @@ ufroutes = LOAD '/tmp/openflight/routes.dat' using PigStorage(',') AS (airlineIA
 planes = FILTER ufplanes BY pname IS NOT NULL and piata IS NOT NULL;
 airports = FILTER ufairports BY id IS NOT NULL and latitude IS NOT NULL and longitude IS NOT NULL;
 froutes = FILTER ufroutes BY sourceID IS NOT NULL and destinationID IS NOT NULL and equipment IS NOT NULL;
-routes = FOREACH froutes GENERATE sourceID, destinationID, FLATTEN(TOKENIZE(equipment, ' ')) AS equipmentID;
+--routes = FOREACH froutes GENERATE sourceID, destinationID, FLATTEN(TOKENIZE(equipment, ' ')) AS equipmentID;
+routes = FOREACH froutes GENERATE sourceID, destinationID, equipment AS equipmentID;
+
 
 sourceAirports = FOREACH airports GENERATE id AS sID, latitude AS sLat, longitude as sLong;
 destAirports = FOREACH airports GENERATE id AS dID, latitude AS dLat, longitude as dLong;
 
 planeRoutes = JOIN planes BY piata, routes BY equipmentID;
+STORE planeRoutes INTO '/tmp/openflight/output/planeDistances' using PigStorage(',');
+
 planeRouteSource = JOIN planeRoutes BY sourceID, sourceAirports BY sID;
 planeRouteAirports = JOIN planeRouteSource BY destinationID, destAirports BY dID;
 
-STORE planeRoutes INTO '/tmp/openflight/output/planeDistances' using PigStorage(',');
+--STORE planeRoutes INTO '/tmp/openflight/output/planeDistances' using PigStorage(',');
 
 
 pra = FOREACH planeRouteAirports GENERATE pname AS planeType, piata AS planeIATA, sLat, sLong, dLat, dLong;
