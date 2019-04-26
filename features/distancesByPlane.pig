@@ -15,7 +15,7 @@ planeRoutes = JOIN planes BY iata, routes BY equipmentID;
 planeRouteSource = JOIN planeRoutes BY sourceID, sourceAirports BY sID;
 planeRouteAirports = JOIN planeRouteSource BY destinationID, destAirports BY dID;
 
-STORE planeRouteAirports INTO '/tmp/openflight/output/planeDistances' using PigStorage(',');
+STORE planeRouteSource INTO '/tmp/openflight/output/planeRoutes' using PigStorage(',');
 
 
 pra = FOREACH planeRouteAirports GENERATE pname AS planeType, iata AS planeIATA, sLat, sLong, dLat, dLong;
