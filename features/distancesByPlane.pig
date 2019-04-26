@@ -7,7 +7,6 @@ fplanes = FILTER ufplanes BY fname IS NOT NULL and fiata IS NOT NULL;
 planes = FOREACH fplanes GENERATE REPLACE(fname, '\\"', '') AS pname, REPLACE(fiata, '\\"', '') AS piata;
 airports = FILTER ufairports BY id IS NOT NULL and latitude IS NOT NULL and longitude IS NOT NULL;
 froutes = FILTER ufroutes BY sourceID IS NOT NULL and destinationID IS NOT NULL and equipment IS NOT NULL;
---routes = FOREACH froutes GENERATE sourceID, destinationID, FLATTEN(TOKENIZE(equipment, ' ')) AS equipmentID;
 routes = FOREACH froutes GENERATE sourceID, destinationID, FLATTEN(TOKENIZE(equipment, ' ')) AS equipmentID;
 
 
@@ -20,8 +19,6 @@ STORE planeRoutes INTO '/tmp/openflight/output/planeDistances' using PigStorage(
 planeRouteSource = JOIN planeRoutes BY sourceID, sourceAirports BY sID;
 planeRouteAirports = JOIN planeRouteSource BY destinationID, destAirports BY dID;
 
---STORE planeRoutes INTO '/tmp/openflight/output/planeDistances' using PigStorage(',');
-
 
 pra = FOREACH planeRouteAirports GENERATE pname AS planeType, piata AS planeIATA, sLat, sLong, dLat, dLong;
 praDistances = FOREACH pra GENERATE planeType, planeIATA, sLat, sLong, dLat, dLong, edu.rosehulman.openanalysis.CalcDistance(sLat, sLong, dLat, dLong) AS distance;
@@ -29,4 +26,4 @@ grouped = GROUP praDistances BY planeIATA;
 
 finalOutput = FOREACH grouped GENERATE FLATTEN(group), MAX(praDistances.distance) AS max, AVG(praDistances.distance) AS avg, MIN(praDistances.distance) AS min, COUNT(praDistances) AS total;
 
---STORE finalOutput into '/tmp/openflight/output/planeDistances/' using PigStorage(',');
+STORE finalOutput into '/tmp/openflight/output/planeDistances/' using PigStorage(',');
