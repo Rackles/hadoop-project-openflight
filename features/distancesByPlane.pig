@@ -1,13 +1,14 @@
 REGISTER DistanceCalculator.jar;
-ufplanes = LOAD '/tmp/openflight/planes.dat' using PigStorage(',') AS (pname:chararray, piata:chararray, picao:chararray);
+ufplanes = LOAD '/tmp/openflight/planes.dat' using PigStorage(',') AS (fname:chararray, fiata:chararray, picao:chararray);
 ufairports = LOAD '/tmp/openflight/airports.dat' using PigStorage(',') AS (id:int, name:chararray, city:chararray, country:chararray, iata:chararray, icao:chararray, latitude:double, longitude:double, alt: double, time:double, dst:chararray, tzdbtz:chararray, type:chararray, source:chararray);
 ufroutes = LOAD '/tmp/openflight/routes.dat' using PigStorage(',') AS (airlineIATA:chararray, airID:int, source:chararray, sourceID:int, destination:chararray, destinationID:int, codeshare:chararray, stops:int, equipment:chararray);
 
-planes = FILTER ufplanes BY pname IS NOT NULL and piata IS NOT NULL;
+fplanes = FILTER ufplanes BY pname IS NOT NULL and piata IS NOT NULL;
+planes = FOREACH fplanes GENERATE REPLACE(fname, '\\"', '') AS pname, REPLACE(fiata, '\\"', '') AS piata;
 airports = FILTER ufairports BY id IS NOT NULL and latitude IS NOT NULL and longitude IS NOT NULL;
 froutes = FILTER ufroutes BY sourceID IS NOT NULL and destinationID IS NOT NULL and equipment IS NOT NULL;
 --routes = FOREACH froutes GENERATE sourceID, destinationID, FLATTEN(TOKENIZE(equipment, ' ')) AS equipmentID;
-routes = FOREACH froutes GENERATE sourceID, destinationID, REPLACE(equipment, '\"', '') AS equipmentID;
+routes = FOREACH froutes GENERATE sourceID, destinationID, FLATTEN(TOKENIZE(equipment, ' ')) AS equipmentID;
 
 
 sourceAirports = FOREACH airports GENERATE id AS sID, latitude AS sLat, longitude as sLong;
@@ -19,7 +20,7 @@ STORE planeRoutes INTO '/tmp/openflight/output/planeDistances' using PigStorage(
 planeRouteSource = JOIN planeRoutes BY sourceID, sourceAirports BY sID;
 planeRouteAirports = JOIN planeRouteSource BY destinationID, destAirports BY dID;
 
---STORE planeRoutes INTO '/tmp/openflight/output/planeDistances' using PigStorage(',');
+STORE planeRoutes INTO '/tmp/openflight/output/planeDistances' using PigStorage(',');
 
 
 pra = FOREACH planeRouteAirports GENERATE pname AS planeType, piata AS planeIATA, sLat, sLong, dLat, dLong;
