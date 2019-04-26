@@ -8,14 +8,15 @@ airports = FILTER ufairports BY id IS NOT NULL and latitude IS NOT NULL and long
 froutes = FILTER ufroutes BY sourceID IS NOT NULL and destinationID IS NOT NULL and equipment IS NOT NULL;
 routes = FOREACH froutes GENERATE sourceID, destinationID, FLATTEN(TOKENIZE(equipment, ' ')) AS equipmentID;
 
-STORE routes INTO '/tmp/openflight/output/planeDistances' using PigStorage(',');
-
 sourceAirports = FOREACH airports GENERATE id AS sID, latitude AS sLat, longitude as sLong;
 destAirports = FOREACH airports GENERATE id AS dID, latitude AS dLat, longitude as dLong;
 
 planeRoutes = JOIN planes BY iata, routes BY equipmentID;
 planeRouteSource = JOIN planeRoutes BY sourceID, sourceAirports BY sID;
 planeRouteAirports = JOIN planeRouteSource BY destinationID, destAirports BY dID;
+
+STORE planeRouteAirports INTO '/tmp/openflight/output/planeDistances' using PigStorage(',');
+
 
 pra = FOREACH planeRouteAirports GENERATE pname AS planeType, iata AS planeIATA, sLat, sLong, dLat, dLong;
 praDistances = FOREACH pra GENERATE planeType, planeIATA, sLat, sLong, dLat, dLong, edu.rosehulman.openanalysis.CalcDistance(sLat, sLong, dLat, dLong) AS distance;
