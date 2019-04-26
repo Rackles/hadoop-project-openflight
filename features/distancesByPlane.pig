@@ -16,7 +16,7 @@ planeRouteSource = JOIN planeRoutes BY sourceID, sourceAirports BY sID;
 planeRouteAirports = JOIN planeRouteSource BY destinationID, destAirports BY dID;
 
 pra = FOREACH planeRouteAirports GENERATE pname AS planeType, iata AS planeIATA, sLat, sLong, dLat, dLong;
-praDistances = FOREACH pra GENERATE edu.rosehulman.openanalysis.CalcDistance(sLat, sLong, dLat, dLong) AS distance;
+praDistances = FOREACH pra GENERATE planeType, planeIATA, sLat, sLong, dLat, dLong, edu.rosehulman.openanalysis.CalcDistance(sLat, sLong, dLat, dLong) AS distance;
 grouped = GROUP praDistances BY planeIATA;
 
 finalOutput = FOREACH grouped GENERATE FLATTEN(group), MAX(praDistances.distance) AS max, AVG(praDistances.distance) AS avg, MIN(praDistances.distance) AS min, COUNT(praDistances) AS total;
