@@ -1,5 +1,5 @@
 REGISTER DistanceCalculator.jar;
-ufplanes = LOAD '/tmp/openflight/planes.dat' using PigStorage(',') AS (pname:chararray, iata:chararray, icao:chararray);
+ufplanes = LOAD '/tmp/openflight/planes.dat' using PigStorage(',') AS (pname:chararray, piata:chararray, picao:chararray);
 ufairports = LOAD '/tmp/openflight/airports.dat' using PigStorage(',') AS (id:int, name:chararray, city:chararray, country:chararray, iata:chararray, icao:chararray, latitude:double, longitude:double, alt: double, time:double, dst:chararray, tzdbtz:chararray, type:chararray, source:chararray);
 ufroutes = LOAD '/tmp/openflight/routes.dat' using PigStorage(',') AS (airlineIATA:chararray, airID:int, source:chararray, sourceID:int, destination:chararray, destinationID:int, codeshare:chararray, stops:int, equipment:chararray);
 
@@ -11,14 +11,14 @@ routes = FOREACH froutes GENERATE sourceID, destinationID, FLATTEN(TOKENIZE(equi
 sourceAirports = FOREACH airports GENERATE id AS sID, latitude AS sLat, longitude as sLong;
 destAirports = FOREACH airports GENERATE id AS dID, latitude AS dLat, longitude as dLong;
 
-planeRoutes = JOIN planes BY iata, routes BY equipmentID;
+planeRoutes = JOIN planes BY piata, routes BY equipmentID;
 planeRouteSource = JOIN planeRoutes BY sourceID, sourceAirports BY sID;
 planeRouteAirports = JOIN planeRouteSource BY destinationID, destAirports BY dID;
 
-STORE routes INTO '/tmp/openflight/output/planeDistances' using PigStorage(',');
+STORE planeRoutes INTO '/tmp/openflight/output/planeDistances' using PigStorage(',');
 
 
-pra = FOREACH planeRouteAirports GENERATE pname AS planeType, iata AS planeIATA, sLat, sLong, dLat, dLong;
+pra = FOREACH planeRouteAirports GENERATE pname AS planeType, piata AS planeIATA, sLat, sLong, dLat, dLong;
 praDistances = FOREACH pra GENERATE planeType, planeIATA, sLat, sLong, dLat, dLong, edu.rosehulman.openanalysis.CalcDistance(sLat, sLong, dLat, dLong) AS distance;
 grouped = GROUP praDistances BY planeIATA;
 
