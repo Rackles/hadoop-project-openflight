@@ -3,7 +3,7 @@ ufplanes = LOAD '/tmp/openflight/planes.dat' using PigStorage(',') AS (fname:cha
 ufairports = LOAD '/tmp/openflight/airports.dat' using PigStorage(',') AS (id:int, name:chararray, city:chararray, country:chararray, iata:chararray, icao:chararray, latitude:double, longitude:double, alt: double, time:double, dst:chararray, tzdbtz:chararray, type:chararray, source:chararray);
 ufroutes = LOAD '/tmp/openflight/routes.dat' using PigStorage(',') AS (airlineIATA:chararray, airID:int, source:chararray, sourceID:int, destination:chararray, destinationID:int, codeshare:chararray, stops:int, equipment:chararray);
 
-fplanes = FILTER ufplanes BY pname IS NOT NULL and piata IS NOT NULL;
+fplanes = FILTER ufplanes BY fname IS NOT NULL and fiata IS NOT NULL;
 planes = FOREACH fplanes GENERATE REPLACE(fname, '\\"', '') AS pname, REPLACE(fiata, '\\"', '') AS piata;
 airports = FILTER ufairports BY id IS NOT NULL and latitude IS NOT NULL and longitude IS NOT NULL;
 froutes = FILTER ufroutes BY sourceID IS NOT NULL and destinationID IS NOT NULL and equipment IS NOT NULL;
