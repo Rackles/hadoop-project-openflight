@@ -7,7 +7,7 @@ CREATE TABLE IF NOT EXISTS Words
 (
 word STRING
 )
-ROW FORMAT DELIMITED FIELDS TERMINATED BY ' '
+ROW FORMAT DELIMITED FIELDS TERMINATED BY '\n'
 STORED AS TEXTFILE;
 
 LOAD DATA INPATH '/user/root/openflight/georgenp/lab6/data/output/testFile.txt' overwrite INTO table Words;
