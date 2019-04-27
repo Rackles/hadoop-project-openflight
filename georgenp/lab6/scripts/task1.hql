@@ -1,3 +1,10 @@
+SET databaseName;
+SET hiveconf:databaseName;
+SET tableName;
+SET hiveconf:tableName;
+SET inputLocation;
+SET hiveconf:inputLocation;
+
 CREATE DATABASE IF NOT EXISTS ${hiveconf:databaseName};
 
 USE ${hiveconf:databaseName};
