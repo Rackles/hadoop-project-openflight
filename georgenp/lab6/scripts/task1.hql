@@ -18,6 +18,6 @@ CREATE TABLE IF NOT EXISTS filteredTemps AS
 SELECT year, temp, quality FROM Temperature WHERE quality = 0 OR quality = 1;
 
 --CREATE TABLE IF NOT EXISTS output AS
-SELECT year, MAX(temp), MIN(temp), AVG(temp) FROM filteredTemps GROUP BY year;
+SELECT year, MAX(temp) AS max, MIN(temp) as min, AVG(temp) as avg FROM filteredTemps GROUP BY year;
 
 --SHOW output;
