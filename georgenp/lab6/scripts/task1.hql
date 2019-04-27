@@ -1,9 +1,8 @@
 CREATE DATABASE IF NOT EXISTS ${hiveconf:databaseName};
 
-USE lab6georgenp;
+USE ${hiveconf:databaseName};
 
-CREATE TABLE IF NOT EXISTS Temperature 
---${hiveconf:tableName}
+CREATE TABLE IF NOT EXISTS ${hiveconf:tableName}
 (
 year int,
 temp int,
