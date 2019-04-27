@@ -1,10 +1,9 @@
-SET hive.variable.substitute=true;
+--CREATE DATABASE IF NOT EXISTS '${hiveconf:databaseName}';
+CREATE DATABASE IF NOT EXISTS lab6georgenp;
 
-CREATE DATABASE IF NOT EXISTS '${hiveconf:databaseName}';
+USE lab6georgenp;
 
-USE '${hiveconf:databaseName}';
-
-CREATE TABLE IF NOT EXISTS '${hiveconf:tableName}'
+CREATE TABLE IF NOT EXISTS Temperature
 (
 year int,
 temp int,
@@ -13,7 +12,7 @@ quality int
 ROW FORMAT DELIMITED FIELDS TERMINATED BY '\t'
 STORED AS TEXTFILE
 
-LOAD DATA INPATH '${hiveconf:inputLocation}' overwrite INTO table Temperature;
+LOAD DATA INPATH openflight/georgenp/lab6/data/output/tempInput.txt overwrite INTO table Temperature;
 
 CREATE TABLE IF NOT EXISTS filteredTemps AS
 SELECT year, temp, quality FROM Temperature WHERE quality = 0 OR quality = 1;
