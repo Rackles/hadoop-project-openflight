@@ -10,7 +10,7 @@ temp int,
 quality int
 )
 ROW FORMAT DELIMITED FIELDS TERMINATED BY '\t'
-STORED AS TEXTFILE
+STORED AS TEXTFILE;
 
 LOAD DATA INPATH openflight/georgenp/lab6/data/output/tempInput.txt overwrite INTO table Temperature;
 
