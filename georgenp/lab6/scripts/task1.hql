@@ -1,3 +1,4 @@
+SET hive.variable.substitute=true;
 SET databaseName;
 SET hiveconf:databaseName;
 SET tableName;
