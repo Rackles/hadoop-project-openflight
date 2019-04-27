@@ -6,11 +6,11 @@ SET hiveconf:tableName;
 SET inputLocation;
 SET hiveconf:inputLocation;
 
-CREATE DATABASE IF NOT EXISTS ${hiveconf:databaseName};
+CREATE DATABASE IF NOT EXISTS '${hiveconf:databaseName}';
 
-USE ${hiveconf:databaseName};
+USE '${hiveconf:databaseName}';
 
-CREATE TABLE IF NOT EXISTS ${hiveconf:tableName}
+CREATE TABLE IF NOT EXISTS '${hiveconf:tableName}'
 (
 year int,
 temp int,
