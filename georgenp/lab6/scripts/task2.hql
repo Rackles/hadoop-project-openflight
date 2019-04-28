@@ -3,6 +3,8 @@ CREATE DATABASE IF NOT EXISTS lab6georgenp;
 
 USE lab6georgenp;
 
+DROP TABLE IF EXISTS Words;
+
 CREATE TABLE Words
 (
 line STRING
