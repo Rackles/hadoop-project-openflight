@@ -5,11 +5,11 @@ USE lab6georgenp;
 
 CREATE TABLE IF NOT EXISTS Words
 (
-word STRING
+line STRING
 );
 --ROW FORMAT DELIMITED FIELDS TERMINATED BY '\t'
 --STORED AS TEXTFILE;
 
 LOAD DATA INPATH '/user/root/openflight/georgenp/lab6/data/output/testFile.txt' overwrite INTO table Words;
 
-SELECT * FROM Words;
+SELECT word, COUNT(*) FROM Words LATERAL VIEW EXPLODE(SPLIT(line, ' ')) AS word GROUP BY word;
