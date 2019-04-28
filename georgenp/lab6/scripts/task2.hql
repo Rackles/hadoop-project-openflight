@@ -3,7 +3,7 @@ CREATE DATABASE IF NOT EXISTS lab6georgenp;
 
 USE lab6georgenp;
 
-CREATE TABLE IF NOT EXISTS Words
+CREATE TABLE Words
 (
 line STRING
 );
@@ -12,4 +12,4 @@ line STRING
 
 LOAD DATA INPATH '/user/root/openflight/georgenp/lab6/data/output/testFile.txt' overwrite INTO table Words;
 
-SELECT word, COUNT(*) FROM Words LATERAL VIEW EXPLODE(SPLIT(word, ' ')) lTable AS word GROUP BY word;
+SELECT word, COUNT(*) AS count FROM Words LATERAL VIEW EXPLODE(SPLIT(line, ' ')) lTable AS word GROUP BY word;
