@@ -8,9 +8,9 @@ DROP TABLE IF EXISTS Words;
 CREATE TABLE Words
 (
 line STRING
-);
---ROW FORMAT DELIMITED FIELDS TERMINATED BY '\t'
---STORED AS TEXTFILE;
+)
+ROW FORMAT DELIMITED FIELDS TERMINATED BY '\n'
+STORED AS TEXTFILE;
 
 LOAD DATA INPATH '/user/root/openflight/georgenp/lab6/data/output/testFile.txt' overwrite INTO table Words;
 
