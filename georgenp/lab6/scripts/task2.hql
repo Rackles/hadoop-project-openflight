@@ -12,4 +12,4 @@ line STRING
 
 LOAD DATA INPATH '/user/root/openflight/georgenp/lab6/data/output/testFile.txt' overwrite INTO table Words;
 
-SELECT word, COUNT(*) FROM Words LATERAL VIEW EXPLODE(SPLIT(line, ' ')) AS word GROUP BY word;
+SELECT word, COUNT(*) FROM Words LATERAL VIEW EXPLODE(SPLIT(line, ' ')) lTable AS word GROUP BY word;
