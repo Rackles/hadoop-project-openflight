@@ -18,7 +18,7 @@ ROW FORMAT DELIMITED FIELDS TERMINATED BY '\t'
 STORED AS TEXTFILE;
 
 --LOAD DATA INPATH '/user/root/openflight/georgenp/lab6/data/output/tempInput.txt' overwrite INTO table Temperature;
-LOAD DATA INPATH ${inputLocation} overwrite INTO table ${tableName};
+LOAD DATA INPATH '${inputLocation}' overwrite INTO table ${tableName};
 
 
 CREATE TABLE IF NOT EXISTS filteredTemps AS
