@@ -1,4 +1,4 @@
-CREATE DATABASE IF NOT EXISTS '${databaseName}';
+CREATE DATABASE IF NOT EXISTS ${databaseName};
 --CREATE DATABASE IF NOT EXISTS lab6georgenp;
 
 USE lab6georgenp;
