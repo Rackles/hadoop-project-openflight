@@ -1,7 +1,11 @@
+DROP DATABASE IF EXISTS ${databaseName};
+
 CREATE DATABASE IF NOT EXISTS ${databaseName};
 --CREATE DATABASE IF NOT EXISTS lab6georgenp;
 
-USE lab6georgenp;
+USE ${databaseName};
+
+DROP TABLE IF EXISTS ${tableName};
 
 CREATE TABLE IF NOT EXISTS ${tableName}
 --CREATE TABLE IF NOT EXISTS Temperature
