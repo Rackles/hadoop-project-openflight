@@ -79,3 +79,14 @@ SELECT * FROM RoseDynamicEmployees;
 
 SHOW Partitions RoseStaticEmployeesORC;
 SELECT * FROM RoseStaticEmployeesORC;
+
+CREATE TABLE RoseDynamicEmployeesManualAdd
+(
+	fname string,
+	lname string,
+	speciality string,
+	employeeNumber int
+)
+Partitioned by (dept string)
+ROW FORMAT DELIMITED FIELDS TERMINATED BY ','
+STORED AS orc;
