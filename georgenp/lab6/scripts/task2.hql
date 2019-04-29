@@ -1,11 +1,11 @@
 CREATE DATABASE IF NOT EXISTS ${databaseName};
 
-USE lab6georgenp;
+USE ${databaseName};
 
 ADD JAR StripChar.jar;
-ADD JAR UpperHive.jar;
-
 CREATE TEMPORARY FUNCTION strip AS 'edu.rosehulman.georgenp.Upper';
+
+ADD JAR UpperHive.jar;
 CREATE TEMPORARY FUNCTION upper AS 'edu.rosehulman.georgenp.Strip';
 
 DROP TABLE IF EXISTS ${tableName};
