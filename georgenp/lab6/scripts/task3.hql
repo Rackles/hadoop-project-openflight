@@ -6,11 +6,11 @@ DROP TABLE IF EXISTS RoseEmployees;
 
 CREATE TABLE RoseEmployees
 (
-	firstname:string,
-	lastname:string,
-	speciality:string,
-	dept:string,
-	employeeNumber:int
+	firstname string,
+	lastname string,
+	speciality string,
+	dept string,
+	employeeNumber int
 )
 ROW FORMAT DELIMITED FIELDS TERMINATED BY ','
 STORED AS TEXTFILE;
@@ -22,10 +22,10 @@ DROP TABLE IF EXISTS RoseStaticEmployees;
 
 CREATE TABLE RoseStaticEmployees
 (
-	fname:string,
-	lname:string,
-	speciality:string,
-	employeeNumber:int
+	fname string,
+	lname string,
+	speciality string,
+	employeeNumber int
 )
 Partitioned by (dept string)
 ROW FORMAT DELIMITED FIELDS TERMINATED BY ','
@@ -40,10 +40,10 @@ DROP TABLE IF EXISTS RoseDynamicEmployees;
 
 CREATE TABLE RoseDynamicEmployees
 (
-	fname:string,
-	lname:string,
-	speciality:string,
-	employeeNumber:int
+	fname string,
+	lname string,
+	speciality string,
+	employeeNumber int
 )
 Partitioned by (dept string)
 ROW FORMAT DELIMITED FIELDS TERMINATED BY ','
@@ -58,10 +58,10 @@ DROP TABLE IF EXISTS RoseStaticEmployeesORC;
 
 CREATE TABLE RoseStaticEmployeesORC
 (
-	fname:string,
-	lname:string,
-	speciality:string,
-	employeeNumber:int
+	fname string,
+	lname string,
+	speciality string,
+	employeeNumber int
 )
 Partitioned by (dept string)
 ROW FORMAT DELIMITED FIELDS TERMINATED BY ','
