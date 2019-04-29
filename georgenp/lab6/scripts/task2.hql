@@ -17,7 +17,7 @@ line STRING
 ROW FORMAT DELIMITED FIELDS TERMINATED BY '\n'
 STORED AS TEXTFILE;
 
-LOAD DATA INPATH ${inputLocation} overwrite INTO table ${tableName};
+LOAD DATA INPATH '${inputLocation}' overwrite INTO table ${tableName};
 
 CREATE TABLE Edited AS
 SELECT strip(upper(line)) AS newline FROM ${tableName};
