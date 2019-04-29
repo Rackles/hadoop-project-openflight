@@ -50,7 +50,7 @@ ROW FORMAT DELIMITED FIELDS TERMINATED BY ','
 STORED AS orc;
 
 Set hive.exec.dynamic.partition.mode=nonstrict;
-INSERT INTO TABLE RoseDynamicEmployees Partition(dept) SELECT fname,lname,speciality,employeeNumber FROM RoseStaticEmployees;
+INSERT INTO TABLE RoseDynamicEmployees Partition(dept) SELECT fname,lname,speciality,dept,employeeNumber FROM RoseStaticEmployees;
 
 Set hive.exec.dynamic.partition.mode=strict;
 
@@ -67,9 +67,9 @@ Partitioned by (dept string)
 ROW FORMAT DELIMITED FIELDS TERMINATED BY ','
 STORED AS orc;
 
-INSERT INTO TABLE RoseStaticEmployeesORC Partition(dept='csse') SELECT fname,lname,speciality,dept,employeeNumber WHERE dept='csse';
-INSERT INTO TABLE RoseStaticEmployeesORC Partition(dept='ece') SELECT fname,lname,speciality,dept,employeeNumber WHERE dept='ece';
-INSERT INTO TABLE RoseStaticEmployeesORC Partition(dept='admin') SELECT fname,lname,speciality,dept,employeeNumber WHERE dept='admin';
+INSERT INTO TABLE RoseStaticEmployeesORC Partition(dept='csse') SELECT fname,lname,speciality,employeeNumber WHERE dept='csse';
+INSERT INTO TABLE RoseStaticEmployeesORC Partition(dept='ece') SELECT fname,lname,speciality,employeeNumber WHERE dept='ece';
+INSERT INTO TABLE RoseStaticEmployeesORC Partition(dept='admin') SELECT fname,lname,speciality,employeeNumber WHERE dept='admin';
 
 SHOW Partitions RoseStaticEmployees;
 SELECT * FROM RoseStaticEmployees;
