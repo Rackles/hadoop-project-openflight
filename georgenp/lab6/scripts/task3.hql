@@ -2,10 +2,12 @@ CREATE DATABASE IF NOT EXISTS lab6georgenp;
 
 USE lab6georgenp;
 
+DROP TABLE IF EXISTS RoseEmployees;
+
 CREATE TABLE RoseEmployees
 (
-	fname:string,
-	lname:string,
+	firstname:string,
+	lastname:string,
 	speciality:string,
 	dept:string,
 	employeeNumber:int
@@ -15,6 +17,8 @@ STORED AS TEXTFILE;
 
 LOAD DATA INPATH '/user/root/openflight/georgenp/lab6/data/output/allEmployees.txt' overwrite INTO table RoseEmployees;
 --LOAD DATA INPATH '{hiveconf:allEmployeesLocation}' overwrite INTO table RoseEmployees;
+
+DROP TABLE IF EXISTS RoseStaticEmployees;
 
 CREATE TABLE RoseStaticEmployees
 (
@@ -32,6 +36,8 @@ LOAD DATA INPATH '/user/root/openflight/georgenp/lab6/data/output/eceEmployees.t
 LOAD DATA INPATH '/user/root/openflight/georgenp/lab6/data/output/adminEmployees.txt' INTO Table RoseStaticEmployees Partition(dept = 'admin');
 --LOAD DATA INPATH '{hiveconf:csseEmployeesLocation}' INTO Table RoseStaticEmployees Partition(dept = 'csse');
 
+DROP TABLE IF EXISTS RoseDynamicEmployees;
+
 CREATE TABLE RoseDynamicEmployees
 (
 	fname:string,
@@ -47,6 +53,8 @@ Set hive.exec.dynamic.partition.mode=nonstrict;
 INSERT INTO TABLE RoseDynamicEmployees Partition(dept) SELECT fname,lname,speciality,employeeNumber FROM RoseStaticEmployees;
 
 Set hive.exec.dynamic.partition.mode=strict;
+
+DROP TABLE IF EXISTS RoseStaticEmployeesORC;
 
 CREATE TABLE RoseStaticEmployeesORC
 (
