@@ -4,11 +4,11 @@ USE lab6georgenp;
 
 CREATE TABLE RoseEmployees
 (
-	fname:STRING,
-	lname:STRING,
-	speciality:STRING,
-	dept:STRING,
-	employeeNumber:INT
+	fname:string,
+	lname:string,
+	speciality:string,
+	dept:string,
+	employeeNumber:int
 )
 ROW FORMAT DELIMITED FIELDS TERMINATED BY ','
 STORED AS TEXTFILE;
@@ -18,10 +18,10 @@ LOAD DATA INPATH '/user/root/openflight/georgenp/lab6/data/output/allEmployees.t
 
 CREATE TABLE RoseStaticEmployees
 (
-	fname:STRING,
-	lname:STRING,
-	speciality:STRING,
-	employeeNumber:INT
+	fname:string,
+	lname:string,
+	speciality:string,
+	employeeNumber:int
 )
 Partitioned by (dept string)
 ROW FORMAT DELIMITED FIELDS TERMINATED BY ','
@@ -34,10 +34,10 @@ LOAD DATA INPATH '/user/root/openflight/georgenp/lab6/data/output/adminEmployees
 
 CREATE TABLE RoseDynamicEmployees
 (
-	fname:STRING,
-	lname:STRING,
-	speciality:STRING,
-	employeeNumber:INT
+	fname:string,
+	lname:string,
+	speciality:string,
+	employeeNumber:int
 )
 Partitioned by (dept string)
 ROW FORMAT DELIMITED FIELDS TERMINATED BY ','
@@ -50,10 +50,10 @@ Set hive.exec.dynamic.partition.mode=strict;
 
 CREATE TABLE RoseStaticEmployeesORC
 (
-	fname:STRING,
-	lname:STRING,
-	speciality:STRING,
-	employeeNumber:INT
+	fname:string,
+	lname:string,
+	speciality:string,
+	employeeNumber:int
 )
 Partitioned by (dept string)
 ROW FORMAT DELIMITED FIELDS TERMINATED BY ','
