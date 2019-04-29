@@ -1,6 +1,6 @@
-CREATE DATABASE IF NOT EXISTS lab6georgenp;
+CREATE DATABASE IF NOT EXISTS ${databaseName};
 
-USE lab6georgenp;
+USE ${databaseName};
 
 DROP TABLE IF EXISTS RoseEmployees;
 
@@ -15,8 +15,8 @@ CREATE TABLE RoseEmployees
 ROW FORMAT DELIMITED FIELDS TERMINATED BY ','
 STORED AS TEXTFILE;
 
-LOAD DATA INPATH '/user/root/openflight/georgenp/lab6/data/output/allEmployees.txt' overwrite INTO table RoseEmployees;
---LOAD DATA INPATH '{hiveconf:allEmployeesLocation}' overwrite INTO table RoseEmployees;
+--LOAD DATA INPATH '/user/root/openflight/georgenp/lab6/data/output/allEmployees.txt' overwrite INTO table RoseEmployees;
+LOAD DATA INPATH '${allEmployeesLocation}' overwrite INTO table RoseEmployees;
 
 DROP TABLE IF EXISTS RoseStaticEmployees;
 
@@ -31,10 +31,13 @@ Partitioned by (dept string)
 ROW FORMAT DELIMITED FIELDS TERMINATED BY ','
 STORED AS TEXTFILE;
 
-LOAD DATA INPATH '/user/root/openflight/georgenp/lab6/data/output/csseEmployees.txt' INTO Table RoseStaticEmployees Partition(dept = 'csse');
-LOAD DATA INPATH '/user/root/openflight/georgenp/lab6/data/output/eceEmployees.txt' INTO Table RoseStaticEmployees Partition(dept = 'ece');
-LOAD DATA INPATH '/user/root/openflight/georgenp/lab6/data/output/adminEmployees.txt' INTO Table RoseStaticEmployees Partition(dept = 'admin');
---LOAD DATA INPATH '{hiveconf:csseEmployeesLocation}' INTO Table RoseStaticEmployees Partition(dept = 'csse');
+--LOAD DATA INPATH '/user/root/openflight/georgenp/lab6/data/output/csseEmployees.txt' INTO Table RoseStaticEmployees Partition(dept = 'csse');
+--LOAD DATA INPATH '/user/root/openflight/georgenp/lab6/data/output/eceEmployees.txt' INTO Table RoseStaticEmployees Partition(dept = 'ece');
+--LOAD DATA INPATH '/user/root/openflight/georgenp/lab6/data/output/adminEmployees.txt' INTO Table RoseStaticEmployees Partition(dept = 'admin');
+LOAD DATA INPATH '${csseEmployeesLocation}' INTO Table RoseStaticEmployees Partition(dept = 'csse');
+LOAD DATA INPATH '${eceEmployeesLocation}' INTO Table RoseStaticEmployees Partition(dept = 'ece');
+LOAD DATA INPATH '${adminEmployeesLocation}' INTO Table RoseStaticEmployees Partition(dept = 'admin');
+
 
 DROP TABLE IF EXISTS RoseDynamicEmployees;
 
