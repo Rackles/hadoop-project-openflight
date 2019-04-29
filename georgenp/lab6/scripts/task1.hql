@@ -1,4 +1,4 @@
-DROP DATABASE IF EXISTS ${databaseName};
+--DROP DATABASE IF EXISTS ${databaseName};
 
 CREATE DATABASE IF NOT EXISTS ${databaseName};
 --CREATE DATABASE IF NOT EXISTS lab6georgenp;
