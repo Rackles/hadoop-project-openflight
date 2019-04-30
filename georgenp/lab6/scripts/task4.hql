@@ -21,7 +21,9 @@ STORED AS TEXTFILE;
 --LOAD DATA INPATH '/user/root/openflight/georgenp/lab5/data/output/task4/2013-06-06/2013-06-06-0,000' overwrite INTO table archiveLogData;
 LOAD DATA INPATH '${pigOutputDir}' overwrite INTO table archiveLogData;
 
-CREATE TABLE logData
+DROP TABLE IF EXISTS logData;
+
+CREATE TABLE IF NOT EXISTS logData
 (
 	index string,
 	blog string,
@@ -33,7 +35,7 @@ ROW FORMAT DELIMITED FIELDS TERMINATED BY ','
 STORED AS orc;
 
 SET hive.exec.dynamic.partition.mode=nonstrict;
-INSERT INTO TABLE logData partition(year) SELECT * FROM archiveLogData WHERE year = ${inputYear};
+INSERT INTO TABLE logData partition(year, month, day, hour) SELECT * FROM archiveLogData WHERE year = ${inputYear};
 --AND month = ${inputMonth} AND day = ${inputDay} AND hour = ${inputHour};
 
 SELECT * FROM logData;
