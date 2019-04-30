@@ -14,10 +14,10 @@ CREATE TABLE IF NOT EXISTS archiveLogData
 	month int,
 	day int,
 	hour int
-)
+);
 
 --LOAD DATA INPATH '/user/root/openflight/georgenp/lab5/data/output/task4/2013-06-06/2013-06-06-0,000' overwrite INTO table archiveLogData;
-LOAD DATA INPATH ${pigOutputDir} ${jobDate} overwrite INTO table archiveLogData;
+LOAD DATA INPATH ${pigOutputDir} overwrite INTO table archiveLogData;
 
 CREATE TABLE logData
 (
