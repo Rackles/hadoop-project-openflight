@@ -19,7 +19,7 @@ ROW FORMAT DELIMITED FIELDS TERMINATED BY '\t'
 STORED AS TEXTFILE;
 
 --LOAD DATA INPATH '/user/root/openflight/georgenp/lab5/data/output/task4/2013-06-06/2013-06-06-0,000' overwrite INTO table archiveLogData;
-LOAD DATA INPATH CONCAT('${pigOutputDir}', '${jobDate}') overwrite INTO table archiveLogData;
+LOAD DATA INPATH '${pigOutputDir}' overwrite INTO table archiveLogData;
 
 DROP TABLE IF EXISTS logData;
 
@@ -35,7 +35,8 @@ ROW FORMAT DELIMITED FIELDS TERMINATED BY ','
 STORED AS orc;
 
 SET hive.exec.dynamic.partition.mode=nonstrict;
-INSERT INTO TABLE logData partition(year, month, day, hour) SELECT * FROM archiveLogData WHERE year = ${inputYear} AND month = ${inputMonth} AND day = ${inputDay} AND hour = ${inputHour};
+INSERT INTO TABLE logData partition(year, month, day, hour) SELECT * FROM archiveLogData WHERE year = ${inputYear};
+--AND month = ${inputMonth} AND day = ${inputDay} AND hour = ${inputHour};
 
 SELECT * FROM logData;
 SELECT * FROM archiveLogData;
