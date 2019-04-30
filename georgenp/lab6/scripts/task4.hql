@@ -19,7 +19,7 @@ ROW FORMAT DELIMITED FIELDS TERMINATED BY '\t'
 STORED AS TEXTFILE;
 
 --LOAD DATA INPATH '/user/root/openflight/georgenp/lab5/data/output/task4/2013-06-06/2013-06-06-0,000' overwrite INTO table archiveLogData;
-LOAD DATA INPATH '${pigOutputDir}' overwrite INTO table archiveLogData;
+LOAD DATA INPATH CONCAT('${pigOutputDir}', '${jobDate}') overwrite INTO table archiveLogData;
 
 DROP TABLE IF EXISTS logData;
 
