@@ -35,8 +35,7 @@ ROW FORMAT DELIMITED FIELDS TERMINATED BY ','
 STORED AS orc;
 
 SET hive.exec.dynamic.partition.mode=nonstrict;
-INSERT INTO TABLE logData partition(year, month, day, hour) SELECT * FROM archiveLogData WHERE year = ${inputYear};
---AND month = ${inputMonth} AND day = ${inputDay} AND hour = ${inputHour};
+INSERT INTO TABLE logData partition(year, month, day, hour) SELECT * FROM archiveLogData WHERE year = ${inputYear} AND month = ${inputMonth} AND day = ${inputDay} AND hour = ${inputHour};
 
 SELECT COUNT(*) FROM logData;
 SELECT COUNT(*) FROM archiveLogData;
