@@ -1,3 +1,6 @@
+--beeline -u jdbc:hive2://10.128.0.4:10000 -n hive -p amin -f task4.hql --hivevar databaseName=logAnalysisgeorgenp --hivevar pigOutputDir=/user/root/openflight/georgenp/lab5/data/output/task4/2013-06-06/2013-06-06-0,000 --hivevar inputYear=2013 --hivevar inputMonth=06 --hivevar inputDay=06 --hivevar inputHour=21
+
+
 CREATE DATABASE IF NOT EXISTS ${databaseName};
 
 USE ${databaseName};
