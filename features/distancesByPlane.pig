@@ -1,7 +1,7 @@
 REGISTER DistanceCalculator.jar;
-ufplanes = LOAD '/tmp/openflight/planes.dat' using PigStorage(',') AS (fname:chararray, fiata:chararray, picao:chararray);
-ufairports = LOAD '/tmp/openflight/airports.dat' using PigStorage(',') AS (id:int, name:chararray, city:chararray, country:chararray, iata:chararray, icao:chararray, latitude:double, longitude:double, alt: double, time:double, dst:chararray, tzdbtz:chararray, type:chararray, source:chararray);
-ufroutes = LOAD '/tmp/openflight/routes.dat' using PigStorage(',') AS (airlineIATA:chararray, airID:int, source:chararray, sourceID:int, destination:chararray, destinationID:int, codeshare:chararray, stops:int, equipment:chararray);
+ufplanes = LOAD '$planesLocation' using PigStorage(',') AS (fname:chararray, fiata:chararray, picao:chararray);
+ufairports = LOAD '$airportsLocation' using PigStorage(',') AS (id:int, name:chararray, city:chararray, country:chararray, iata:chararray, icao:chararray, latitude:double, longitude:double, alt: double, time:double, dst:chararray, tzdbtz:chararray, type:chararray, source:chararray);
+ufroutes = LOAD '$routesLocation' using PigStorage(',') AS (airlineIATA:chararray, airID:int, source:chararray, sourceID:int, destination:chararray, destinationID:int, codeshare:chararray, stops:int, equipment:chararray);
 
 fplanes = FILTER ufplanes BY fname IS NOT NULL and fiata IS NOT NULL;
 planes = FOREACH fplanes GENERATE REPLACE(fname, '\\"', '') AS pname, REPLACE(fiata, '\\"', '') AS piata;
@@ -25,4 +25,4 @@ grouped = GROUP praDistances BY planeIATA;
 
 finalOutput = FOREACH grouped GENERATE FLATTEN(group), MAX(praDistances.distance) AS max, AVG(praDistances.distance) AS avg, MIN(praDistances.distance) AS min, COUNT(praDistances) AS total;
 
-STORE finalOutput into '/tmp/openflight/output/planeDistances/' using PigStorage(',');
+STORE finalOutput into '$outputLocation' using PigStorage(',');
