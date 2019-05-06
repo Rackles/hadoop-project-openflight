@@ -2,7 +2,7 @@ sqoop import --connect jdbc:mysql://$1/georgenpsqoop --username hive --password 
 
 sqoop import --connect jdbc:mysql://$1/georgenpsqoop --username hive --password admin --table Employees -m 1 --target-dir /tmp/sqoopMapOutput
 
-sqoop import --connect jdbc:mysql://$1/georgenpsqoop --username hive --password admin --table Employees -m 2 --target-dir /tmp/sqoopSeqOutput --as-sequencefile
+sqoop import --connect jdbc:mysql://$1/georgenpsqoop --username hive --password admin -m 2 --table Employees --target-dir /tmp/sqoopSeqOutput --as-sequencefile
 
 sqoop import --connect jdbc:mysql://$1/georgenpsqoop --username hive --password admin --table Employees -m 2 --warehouse-dir /tmp/sqoop/Employees
 
