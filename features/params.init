@@ -1,4 +1,6 @@
+limit=10
 routesLocation=/tmp/openflight/routes.dat
 airportsLocation=/tmp/openflight/airports.dat
 airlinesLocation=/tmp/openflight/airlines.dat
-outputLocation=/tmp/openflight/output/longestDistanceAirline/
+planesLocation=/tmp/openflight/planes.dat
+outputLocation=/tmp/openflight/output/mostConnectedAirports/

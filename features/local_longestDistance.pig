@@ -1,7 +1,7 @@
-REGISTER DistanceCalculator.jar;
-ufroutes = LOAD '$routesLocation' using PigStorage(',') AS (airlineIATA:chararray, airID:int, source:chararray, sourceID:int, destination:chararray, destinationID:int, codeshare:chararray, stops:int, equipment:chararray);
-ufairlines = LOAD '$airlinesLocation' using PigStorage(',') AS (airlineID:int, name:chararray, alias:chararray, iata:chararray, icao:chararray, callsign: chararray, country:chararray, active:chararray);
-ufairports = LOAD '$airportsLocation' using PigStorage(',') AS (airportID:int, airportName:chararray, city:chararray, country:chararray, iata:chararray, icao:chararray, latitude:double, longitude:double, altitude:double, timezone:double, dst:chararray, TZtimezone:chararray, type:chararray, source:chararray);
+REGISTER features/DistanceCalculator.jar;
+ufroutes = LOAD './routes.dat' using PigStorage(',') AS (airlineIATA:chararray, airID:int, source:chararray, sourceID:int, destination:chararray, destinationID:int, codeshare:chararray, stops:int, equipment:chararray);
+ufairlines = LOAD './airlines.dat' using PigStorage(',') AS (airlineID:int, name:chararray, alias:chararray, iata:chararray, icao:chararray, callsign: chararray, country:chararray, active:chararray);
+ufairports = LOAD './airports.dat' using PigStorage(',') AS (airportID:int, airportName:chararray, city:chararray, country:chararray, iata:chararray, icao:chararray, latitude:double, longitude:double, altitude:double, timezone:double, dst:chararray, TZtimezone:chararray, type:chararray, source:chararray);
 
 
 fairlines = FILTER ufairlines BY name IS NOT NULL and iata IS NOT NULL;
