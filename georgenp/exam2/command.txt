@@ -1,0 +1,1 @@
+pig -x mapreduce -param gradesLocation=/tmp/Exams/grades.txt -param coursesLocation=/tmp/Exams/courses.txt -param pigOutput=/tmp/Exams -param username=georgenp exam.pig
