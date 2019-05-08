@@ -1,1 +1,5 @@
 pig -x mapreduce -param gradesLocation=/tmp/Exams/grades.txt -param coursesLocation=/tmp/Exams/courses.txt -param pigOutput=/tmp/Exams -param username=georgenp exam.pig
+
+beeline -u jdbc:hive2://10.128.0.4:10000 -n hive -p adn -f hiveCreate.hql --hivevar databaseName='exam' --hivevar tempTableName='tempTable' --hivevar tableName='examData'
+
+beeline -u jdbc:hive2://10.128.0.4:10000 -n hive -p adn -f hiveInsert.hql --hivevar databaseName='exam' --hivevar tempTableName='tempTable' --hivevar tableName='examData' --hivevar fileLocation='/user/root/openflight/georgenp/exam2/georgenp/part-r-00000'
