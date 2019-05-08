@@ -7,4 +7,8 @@ filteredGrades = FILTER grades BY score <= 90.0;
 nameGrades = FOREACH filteredGrades GENERATE edu.rosehulman.georgenp.ConcatName(fname, lname) AS fullname, cNum, edu.rosehulman.georgenp.ScoreToGrade(score) AS grade;
 courseGrades = JOIN nameGrades BY cNum, courses BY cNo; 
 
-STORE courseGrades INTO '${pigOutput}/${username}' using PigStorage('\t');
+realGrades = FOREACH courseGrades GENERATE fullname, cNum, cName, grade;
+
+finalOutput = ORDER realGrades BY cName ASC;
+
+STORE finalOutput INTO '${pigOutput}/${username}' using PigStorage('\t');
