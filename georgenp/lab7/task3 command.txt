@@ -1,0 +1,1 @@
+$flume-ng agent --conf-file agent.conf --name a1

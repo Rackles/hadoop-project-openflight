@@ -2,7 +2,7 @@
 hadoop fs -mkdir /tmp/georgenp
 hadoop fs -put LogInterceptor.jar /tmp/georgenp
 
-$flume-ng agent --conf-file agent.conf --name a1 --classpath /tmp/georgenp/LogInterceptor.jar -Xmx4096m -Xms2048m
+flume-ng agent --conf-file georgenpagentInterceptor.conf --name a1 --classpath /tmp/georgenp/LogInterceptor.jar -Xmx4096m -Xms2048m
 
 
 #Q2
