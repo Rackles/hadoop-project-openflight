@@ -1,5 +1,26 @@
+#Q1
+hadoop fs -mkdir /tmp/georgenp
+hadoop fs -put LogInterceptor.jar /tmp/georgenp
+
+$flume-ng agent --conf-file agent.conf --name a1 --classpath /tmp/georgenp/LogInterceptor.jar -Xmx4096m -Xms2048m
+
+
+#Q2
+hadoop fs -put georgenpUDF.jar /tmp/Exams/
+
 pig -x mapreduce -param gradesLocation=/tmp/Exams/grades.txt -param coursesLocation=/tmp/Exams/courses.txt -param pigOutput=/tmp/Exams -param username=georgenp exam.pig
 
+
+#Q3
 beeline -u jdbc:hive2://10.128.0.4:10000 -n hive -p adn -f hiveCreate.hql --hivevar databaseName='exam' --hivevar tempTableName='tempTable' --hivevar tableName='examData'
 
-beeline -u jdbc:hive2://10.128.0.4:10000 -n hive -p adn -f hiveInsert.hql --hivevar databaseName='exam' --hivevar tempTableName='tempTable' --hivevar tableName='examData' --hivevar fileLocation='/user/root/openflight/georgenp/exam2/georgenp/part-r-00000'
+beeline -u jdbc:hive2://10.128.0.4:10000 -n hive -p adn -f hiveInsert.hql --hivevar databaseName='exam' --hivevar tempTableName='tempTable' --hivevar tableName='examData' --hivevar fileLocation='/user/root/tmp/georgenp/exam2/georgenp/part-r-00000'
+
+
+#Q4
+CREATE TABLE tempResult AS SELECT cNo, COUNT(*) AS count FROM examData WHERE grade != 'D' GROUP BY cNo;
+SELECT cNo FROM tempResult WHERE count >= 2;
+
+
+#Q5
+sqoop export --connect jdbc:mysql://10.128.0.4:3306/georgenpsqoop --username hive --password admin -m 1 --table examTable --export-dir /tmp/Exams/exam/username=georgenp
