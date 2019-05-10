@@ -1,5 +1,56 @@
 <workflow-app name="OpenAnalysisWorkflow" xmlns="uri:oozie:workflow:0.4">
     <start to="PigAction"/>
     <action name="PigAction">
+        <pig>
+            <job-tracker>${jobTracker}</job-tracker>
+            <name-node>${name-node}</name-node>
+            <prepare>
+                <delete path="${pigOutputPath}">
+            </prepare>
+
+            <script>${pigScript}</script>
+                <param>airportsLocation=${airportsLocation}</param>
+                <param>airlinesLocation=${airlinesLocation}</param>
+                <param>routesLocation=${routesLocation}</param>
+                <param>planesLocation=${planesLocation}</param>
+                <param>outputLocation=${outputLocation}</param>
+                <param>n=${n}</param>
+        </pig>
+        <ok to="SQLAction">
+        <error to="PigKill">
     </action>
+    <action name="SQLAction">
+        <shell>
+            <exec>${sqlScript}</exec>
+            <file>${sqlScript}</file>
+        </shell>
+        <ok to="SqoopAction">
+        <error to="SQLKill">
+    </action>
+    <action name="SqoopAction">
+        <sqoop xmlns="uri:oozie:sqoop-action:0.2">
+            <job-tracker>${jobTracker}</jobTracker>
+            <name-node>${name-node}</name-node>
+            <command>sqoop export --connect jdbc:mysql://10.128.0.4:3306/OpenAnalysis --username hive --password admin -m 1 --table ${TableName} --export-dir ${exportDir} --input-fields-terminated-by ',' --input-null-string '\\N' --input-null-non-string '\\N'
+            </command>
+        </sqoop>
+        <ok to="end">
+        <error to="SqoopKill">
+    </action>
+    <kill name="PigKill">
+        <message>Pig Action Failed, error message
+            [${wf:errorMessage(wf:lastErrorNode())}]
+        </message>
+    </kill>
+    <kill name="SQLKill">
+        <message>SQL Action Failed, error message
+            [${wf:errorMessage(wf:lastErrorNode())}]
+        </message>
+    </kill>
+    <kill name="SqoopKill">
+        <message>Sqoop Action Failed, error message
+            [${wf:errorMessage(wf:lastErrorNode())}]
+        </message>
+    </kill>
+
 </workflow-app>
