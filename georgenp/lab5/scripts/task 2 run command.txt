@@ -1,0 +1,1 @@
+pig -param input='openflight/georgenp/lab5/data/input/task2' -param output='openflight/georgenp/lab5/data/output' -x mapreduce task2.pig
