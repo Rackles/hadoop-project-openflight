@@ -5,7 +5,7 @@
             <job-tracker>${jobTracker}</job-tracker>
             <name-node>${name-node}</name-node>
             <prepare>
-                <delete path="${pigOutputPath}"/>
+                <delete path="${pigOutputPath}"></delete>
             </prepare>
 
             <script>${pigScript}</script>
