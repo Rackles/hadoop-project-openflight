@@ -16,16 +16,16 @@
                 <param>outputLocation=${outputLocation}</param>
                 <param>n=${n}</param>
         </pig>
-        <ok to="SQLAction">
-        <error to="PigKill">
+        <ok to="SQLAction"/>
+        <error to="PigKill"/>
     </action>
     <action name="SQLAction">
         <shell>
             <exec>${sqlScript}</exec>
             <file>${sqlScript}</file>
         </shell>
-        <ok to="SqoopAction">
-        <error to="SQLKill">
+        <ok to="SqoopAction"/>
+        <error to="SQLKill"/>
     </action>
     <action name="SqoopAction">
         <sqoop xmlns="uri:oozie:sqoop-action:0.2">
@@ -34,8 +34,8 @@
             <command>sqoop export --connect jdbc:mysql://10.128.0.4:3306/OpenAnalysis --username hive --password admin -m 1 --table ${TableName} --export-dir ${exportDir} --input-fields-terminated-by ',' --input-null-string '\\N' --input-null-non-string '\\N'
             </command>
         </sqoop>
-        <ok to="end">
-        <error to="SqoopKill">
+        <ok to="end"/>
+        <error to="SqoopKill"/>
     </action>
     <kill name="PigKill">
         <message>Pig Action Failed, error message
