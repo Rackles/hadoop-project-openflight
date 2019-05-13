@@ -1,0 +1,32 @@
+<workflow-app name="PigHiveBeeline" xmlns="uri:oozie:workflow:0.4">
+    <start to="HiveAction"/>
+    <action name="HiveAction">
+        <hive2 xmlns="uri:oozie:hive2-action:0.1">
+            <job-tracker>${jobTracker}</job-tracker>
+            <name-node>${nameNode}</name-node>
+              <job-xml>/tmp/shared/hive-site.xml</job-xml>
+	<jdbc-url>jdbc:hive2://10.128.0.4:10000</jdbc-url>
+	<password>admin</password>
+            <script>/tmp/georgenp/scripts/hiveQuery.hql</script>
+              <param>databaseName=${databaseName}</param>
+              <param>tableName=${tableName}</param>
+              <param>inputLocation=${inputLocation}</param>
+        </hive2>
+        <ok to="Export"/>
+        <error to="kill"/>
+    </action>
+    <action name="Export">
+        <sqoop xmlns="uri:oozie:sqoop-action:0.2">
+            <job-tracker>${jobTracker}</job-tracker>
+            <name-node>${nameNode}</name-node>
+            <job-xml>/tmp/shared/hive-site.xml</job-xml>
+            <command>export --connect jdbc:mysql://10.128.0.4:3306/georgenpTask2 --username hive --password admin -m 1 --table tempSample --export-dir /tmp/georgenp/SqoopOutput/ --input-fields-terminated-by ,</command>
+        </sqoop>
+        <ok to="end"/>
+        <error to="kill"/>
+    </action>
+    <kill name="kill">
+        <message>Action failed, error message[${wf:errorMessage(wf:lastErrorNode())}]</message>
+    </kill>
+    <end name="end"/>
+</workflow-app>

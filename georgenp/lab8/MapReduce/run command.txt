@@ -1,0 +1,3 @@
+hadoop fs -put MapReduce /tmp/georgenp/deploy 
+
+sudo -u hdfs oozie job -oozie http://10.128.0.4:11000/oozie -config MapReduce/job.properties -run
