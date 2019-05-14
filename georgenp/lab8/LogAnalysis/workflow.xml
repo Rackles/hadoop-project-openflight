@@ -8,11 +8,16 @@
                   <delete path="${PigOutputPath}"/>
             </prepare>
             <script>/tmp/georgenp/scripts/logAnalysis.pig</script>
-              <param>input=${PigInputPath}</param>
-              <param>output=${PigOutputPath}</param>
-              <param>inputYear=${inputYear}</param>
-              <param>inputMonth=${inputMonth}</param>
-              <param>inputDay=${inputDay}</param>
+            <argument>-param</argument>
+              <argument>input=${PigInputPath}</argument>
+            <argument>-param</argument>
+              <argument>output=${PigOutputPath}</argument>
+            <argument>-param</argument>
+              <argument>inputYear=${inputYear}</argument>
+            <argument>-param</argument>
+              <argument>inputMonth=${inputMonth}</argument>
+            <argument>-param</argument>
+              <argument>inputDay=${inputDay}</argument>
         </pig>
         <ok to="HiveCreate"/>
         <error to="kill"/>
@@ -24,12 +29,18 @@
 	<jdbc-url>jdbc:hive2://10.128.0.4:10000</jdbc-url>
 	<password>admin</password>
             <script>/tmp/georgenp/scripts/hiveCreate.hql</script>
-              <param>databaseName=${databaseName}</param>
-              <param>tableName=${tableName}</param>
-              <param>PigOutputDir=${PigOutputPath}</param>
-              <param>inputYear=${inputYear}</param>
-              <param>inputMonth=${inputMonth}</param>
-              <param>inputDay=${inputDay}</param>
+            <argument>-param</argument>
+              <argument>databaseName=${databaseName}</argument>
+            <argument>-param</argument>
+              <argument>tableName=${tableName}</argument>
+            <argument>-param</argument>
+              <argument>PigOutputDir=${PigOutputPath}</argument>
+            <argument>-param</argument>
+              <argument>inputYear=${inputYear}</argument>
+            <argument>-param</argument>
+              <argument>inputMonth=${inputMonth}</argument>
+            <argument>-param</argument>
+              <argument>inputDay=${inputDay}</argument>
         </hive2>
         <ok to="HiveLoad"/>
         <error to="kill"/>
@@ -41,9 +52,12 @@
 	<jdbc-url>jdbc:hive2://10.128.0.4:10000</jdbc-url>
 	<password>admin</password>
             <script>/tmp/georgenp/scripts/hiveLoad.hql</script>
-              <param>databaseName=${databaseName}</param>
-              <param>tableName=${tableName}</param>
-              <param>dTableName=${dTableName}</param>
+            <argument>-param</argument>
+              <argument>databaseName=${databaseName}</argument>
+            <argument>-param</argument>
+              <argument>tableName=${tableName}</argument>
+            <argument>-param</argument>
+              <argument>dTableName=${dTableName}</argument>
         </hive2>
         <ok to="end"/>
         <error to="kill"/>
