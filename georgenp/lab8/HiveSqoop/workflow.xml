@@ -18,7 +18,7 @@
         <sqoop xmlns="uri:oozie:sqoop-action:0.2">
             <job-tracker>${jobTracker}</job-tracker>
             <name-node>${nameNode}</name-node>
-            <command>export --connect jdbc:mysql://10.128.0.4:3306/oozieDB --username hive --password admin -m 1 --table temp --export-dir /tmp/georgenp/input/tempInput.txt --input-fields-terminated-by \t</command>
+            <command>export --connect jdbc:mysql://10.128.0.4:3306/${databaseName} --username hive --password admin -m 1 --table ${tableName} --export-dir tmp/georgenp/hiveDB/lab8 --input-fields-terminated-by ,</command>
         </sqoop>
         <ok to="end"/>
         <error to="kill"/>

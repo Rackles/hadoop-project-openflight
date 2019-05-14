@@ -1,0 +1,53 @@
+<workflow-app name="LogAnalysis" xmlns="uri:oozie:workflow:0.4">
+    <start to="PigAction"/>
+    <action name="PigAction">
+        <pig>
+            <job-tracker>${jobTracker}</job-tracker>
+            <name-node>${nameNode}</name-node>
+            <prepare>
+                  <delete path="${PigOutputPath}"/>
+            </prepare>
+            <script>/tmp/georgenp/scripts/logAnalysis.pig</script>
+              <param>input=${PigInputPath}</param>
+              <param>output=${PigOutputPath}</param>
+        </pig>
+        <ok to="HiveCreate"/>
+        <error to="kill"/>
+    </action>
+     <action name="HiveCreate">
+        <hive2 xmlns="uri:oozie:hive2-action:0.1">
+            <job-tracker>${jobTracker}</job-tracker>
+            <name-node>${nameNode}</name-node>
+	<jdbc-url>jdbc:hive2://10.128.0.4:10000</jdbc-url>
+	<password>admin</password>
+            <script>/tmp/georgenp/scripts/hiveCreate.hql</script>
+              <param>databaseName=${databaseName}</param>
+              <param>tableName=${tableName}</param>
+              <param>PigOutputDir=${PigOutputPath}</param>
+        </hive2>
+        <ok to="HiveLoad"/>
+        <error to="kill"/>
+    </action>
+    <action name="HiveLoad">
+        <hive2 xmlns="uri:oozie:hive2-action:0.1">
+            <job-tracker>${jobTracker}</job-tracker>
+            <name-node>${nameNode}</name-node>
+	<jdbc-url>jdbc:hive2://10.128.0.4:10000</jdbc-url>
+	<password>admin</password>
+            <script>/tmp/georgenp/scripts/hiveLoad.hql</script>
+              <param>databaseName=${databaseName}</param>
+              <param>tableName=${tableName}</param>
+              <param>dTableName=${dTableName}</param>
+              <param>inputYear=${inputYear}</param>
+              <param>inputMonth=${inputMonth}</param>
+              <param>inputDay=${inputDay}</param>
+              <param>inputHour=${inputHour}</param>
+        </hive2>
+        <ok to="end"/>
+        <error to="kill"/>
+    </action>
+    <kill name="kill">
+        <message>Action failed, error message[${wf:errorMessage(wf:lastErrorNode())}]</message>
+    </kill>
+    <end name="end"/>
+</workflow-app>

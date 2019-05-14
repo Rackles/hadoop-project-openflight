@@ -4,11 +4,14 @@ USE ${databaseName};
 
 DROP TABLE IF EXISTS ${tableName};
 
-CREATE TABLE IF NOT EXISTS ${tableName}
+CREATE EXTERNAL TABLE IF NOT EXISTS ${tableName}
 (
 year int,
 temp int,
 quality int
 )
 ROW FORMAT DELIMITED FIELDS TERMINATED BY '\t'
-STORED AS TEXTFILE;
+STORED AS TEXTFILE
+LOCATION 'tmp/georgenp/hiveDB/lab8';
+
+LOAD DATA INPATH '${inputLocation}' overwrite INTO table ${tableName};
