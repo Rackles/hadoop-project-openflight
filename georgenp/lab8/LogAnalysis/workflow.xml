@@ -1,4 +1,4 @@
-<workflow-app name="LogAnalysis" xmlns="uri:oozie:workflow:0.4">
+<workflow-app name="LogAnalysisGeorgenp" xmlns="uri:oozie:workflow:0.4">
     <start to="PigAction"/>
     <action name="PigAction">
         <pig>
@@ -10,6 +10,9 @@
             <script>/tmp/georgenp/scripts/logAnalysis.pig</script>
               <param>input=${PigInputPath}</param>
               <param>output=${PigOutputPath}</param>
+              <param>inputYear=${inputYear}</param>
+              <param>inputMonth=${inputMonth}</param>
+              <param>inputDay=${inputDay}</param>
         </pig>
         <ok to="HiveCreate"/>
         <error to="kill"/>
@@ -24,6 +27,9 @@
               <param>databaseName=${databaseName}</param>
               <param>tableName=${tableName}</param>
               <param>PigOutputDir=${PigOutputPath}</param>
+              <param>inputYear=${inputYear}</param>
+              <param>inputMonth=${inputMonth}</param>
+              <param>inputDay=${inputDay}</param>
         </hive2>
         <ok to="HiveLoad"/>
         <error to="kill"/>
@@ -38,10 +44,6 @@
               <param>databaseName=${databaseName}</param>
               <param>tableName=${tableName}</param>
               <param>dTableName=${dTableName}</param>
-              <param>inputYear=${inputYear}</param>
-              <param>inputMonth=${inputMonth}</param>
-              <param>inputDay=${inputDay}</param>
-              <param>inputHour=${inputHour}</param>
         </hive2>
         <ok to="end"/>
         <error to="kill"/>

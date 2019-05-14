@@ -18,4 +18,4 @@ CREATE TABLE IF NOT EXISTS ${tableName}
 ROW FORMAT DELIMITED FIELDS TERMINATED BY '\t'
 STORED AS TEXTFILE;
 
-LOAD DATA INPATH '${pigOutputDir}' overwrite INTO table ${tableName};
+LOAD DATA INPATH '${pigOutputDir}/${inputYear}-${inputMonth}-${inputDay}' overwrite INTO table ${tableName};

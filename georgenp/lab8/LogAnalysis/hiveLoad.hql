@@ -14,4 +14,4 @@ ROW FORMAT DELIMITED FIELDS TERMINATED BY ','
 STORED AS orc;
 
 SET hive.exec.dynamic.partition.mode=nonstrict;
-INSERT INTO TABLE ${dTableName} partition(year, month, day, hour) SELECT * FROM ${tableName} WHERE year = ${inputYear} AND month = ${inputMonth} AND day = ${inputDay} AND hour = ${inputHour};
+INSERT INTO TABLE ${dTableName} partition(year, month, day, hour) SELECT * FROM ${tableName};
