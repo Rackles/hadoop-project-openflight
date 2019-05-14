@@ -1,3 +1,0 @@
-hadoop fs -put HiveSqoop /tmp/georgenp/deploy
-
-sudo -u hdfs oozie job -oozie http://10.128.0.4:11000/oozie -config HiveSqoop/job.properties -run
