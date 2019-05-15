@@ -37,7 +37,7 @@
         <sqoop xmlns="uri:oozie:sqoop-action:0.2">
             <job-tracker>${jobTracker}</jobTracker>
             <name-node>${name-node}</name-node>
-            <command>sqoop export --connect jdbc:mysql://10.128.0.4:3306/OpenAnalysis --username hive --password admin -m 1 --table ${TableName} --export-dir ${exportDir} --input-fields-terminated-by ',' --input-null-string '\\N' --input-null-non-string '\\N'
+            <command>sqoop export --connect jdbc:postgresql://193.196.37.32:5432/openanalysis --username postgres --password admin -m 1 --table ${TableName} --export-dir ${exportDir} --input-fields-terminated-by ',' --input-null-string '\\N' --input-null-non-string '\\N'
             </command>
         </sqoop>
         <ok to="end"/>
