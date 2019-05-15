@@ -27,6 +27,8 @@
     </action>
     <action name="SQLAction">
         <shell xmlns="uri:oozie:shell-action:0.1">
+            <job-tracker>${jobTracker}</job-tracker>
+            <name-node>${name-node}</name-node>
             <exec>${sqlScript}</exec>
             <file>${sqlScript}</file>
         </shell>
