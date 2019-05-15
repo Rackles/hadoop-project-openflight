@@ -22,4 +22,4 @@ r_w_aDistances = FOREACH r_w_a GENERATE name, iata, sname, dname, sLat, sLong, d
 
 ordered = ORDER r_w_aDistances BY distanceByAirline DESC;
 
-STORE ordered  INTO '$outputLocation' using PigStorage('\t');
+STORE ordered  INTO '$outputLocation' using PigStorage(',');

@@ -18,4 +18,4 @@ connected_country = FOREACH groupConnected_country GENERATE FLATTEN(group), conn
 
 result_country = ORDER connected_country BY count DESC;
 
-STORE result_country INTO '$outputLocation' using PigStorage('\t');
+STORE result_country INTO '$outputLocation' using PigStorage(',');

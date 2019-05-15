@@ -14,4 +14,4 @@ groupJoined = GROUP joined BY (airID, iata, airlineName, total);
 
 finalOutput = FOREACH groupJoined GENERATE FLATTEN(group);
 
-STORE finalOutput INTO '$outputLocation' using PigStorage('\t');
+STORE finalOutput INTO '$outputLocation' using PigStorage(',');

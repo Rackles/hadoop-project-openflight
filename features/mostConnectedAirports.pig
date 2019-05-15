@@ -13,4 +13,4 @@ connected = FOREACH groupConnected GENERATE FLATTEN(group), connectedAirports.la
 
 result = ORDER connected BY count DESC;
 
-STORE result INTO '$outputLocation' using PigStorage('\t');
+STORE result INTO '$outputLocation' using PigStorage(',');
