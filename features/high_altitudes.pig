@@ -2,5 +2,5 @@ records = LOAD '$airportsLocation' using PigStorage(',') AS (id:int, name:charar
 frecords = FILTER records by id IS NOT NULL and alt IS NOT NULL;
 orecords = ORDER frecords BY alt DESC;
 srecords = FOREACH orecords GENERATE id, name, city, country, iata, alt, latitude, longitude;
-lowAltOutput = LIMIT srecords $num;
+lowAltOutput = LIMIT srecords $limit;
 STORE lowAltOutput into '$outputLocation' using PigStorage(',');
