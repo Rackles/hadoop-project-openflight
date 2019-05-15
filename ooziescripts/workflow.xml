@@ -3,9 +3,9 @@
     <action name="PigAction">
         <pig>
             <job-tracker>${jobTracker}</job-tracker>
-            <name-node>${name-node}</name-node>
+            <name-node>${nameNode}</name-node>
             <prepare>
-                <delete path="${pigOutputPath}"></delete>
+                <delete path="${outputLocation}"></delete>
             </prepare>
 
             <script>${pigScript}</script>
@@ -28,7 +28,7 @@
     <action name="SQLAction">
         <shell xmlns="uri:oozie:shell-action:0.1">
             <job-tracker>${jobTracker}</job-tracker>
-            <name-node>${name-node}</name-node>
+            <name-node>${nameNode}</name-node>
             <exec>${sqlScript}</exec>
             <file>${sqlScript}</file>
         </shell>
@@ -38,7 +38,7 @@
     <action name="SqoopAction">
         <sqoop xmlns="uri:oozie:sqoop-action:0.2">
             <job-tracker>${jobTracker}</job-tracker>
-            <name-node>${name-node}</name-node>
+            <name-node>${nameNode}</name-node>
             <command>sqoop export --connect jdbc:postgresql://193.196.37.32:5432/openanalysis --username postgres --password admin -m 1 --table ${TableName} --export-dir ${exportDir} --input-fields-terminated-by ',' --input-null-string '\\N' --input-null-non-string '\\N'
             </command>
         </sqoop>
