@@ -26,7 +26,7 @@
         <error to="PigKill"/>
     </action>
     <action name="SQLAction">
-        <shell>
+        <shell xmlns="uri:oozie:shell-action:0.1">
             <exec>${sqlScript}</exec>
             <file>${sqlScript}</file>
         </shell>
