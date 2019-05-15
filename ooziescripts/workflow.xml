@@ -60,5 +60,5 @@
             [${wf:errorMessage(wf:lastErrorNode())}]
         </message>
     </kill>
-
+    <end name="end"/>
 </workflow-app>
