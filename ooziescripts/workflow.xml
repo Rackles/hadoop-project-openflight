@@ -20,7 +20,7 @@
                 <argument>-param</argument>
                 <argument>outputLocation=${outputLocation}</argument>
                 <argument>-param</argument>
-                <argument>n=${n}</argument>
+                <argument>limit=${limit}</argument>
         </pig>
         <ok to="SQLAction"/>
         <error to="PigKill"/>
