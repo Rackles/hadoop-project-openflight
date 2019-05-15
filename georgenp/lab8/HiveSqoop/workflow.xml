@@ -1,6 +1,6 @@
 <workflow-app name="HiveSqoop" xmlns="uri:oozie:workflow:0.4">
     <start to="Export"/>
-    <action name="Export">
+    <action name="Export">x`
         <sqoop xmlns="uri:oozie:sqoop-action:0.2">
             <job-tracker>${jobTracker}</job-tracker>
             <name-node>${nameNode}</name-node>

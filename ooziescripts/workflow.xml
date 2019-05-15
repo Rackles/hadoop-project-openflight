@@ -9,12 +9,18 @@
             </prepare>
 
             <script>${pigScript}</script>
-                <param>airportsLocation=${airportsLocation}</param>
-                <param>airlinesLocation=${airlinesLocation}</param>
-                <param>routesLocation=${routesLocation}</param>
-                <param>planesLocation=${planesLocation}</param>
-                <param>outputLocation=${outputLocation}</param>
-                <param>n=${n}</param>
+                <argument>-param</argument>
+                <argument>airportsLocation=${airportsLocation}</argument>
+                <argument>-param</argument>
+                <argument>airlinesLocation=${airlinesLocation}</argument>
+                <argument>-param</argument>
+                <argument>routesLocation=${routesLocation}</argument>
+                <argument>-param</argument>
+                <argument>planesLocation=${planesLocation}</argument>
+                <argument>-param</argument>
+                <argument>outputLocation=${outputLocation}</argument>
+                <argument>-param</argument>
+                <argument>n=${n}</argument>
         </pig>
         <ok to="SQLAction"/>
         <error to="PigKill"/>
