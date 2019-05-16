@@ -16,6 +16,7 @@ routesWithCoordinates = JOIN airportsSourceRoutes BY sourceID, destAirports by d
 rwc = FOREACH routesWithCoordinates GENERATE airportsSourceRoutes::routes::source AS sname, airportsSourceRoutes::routes::destination AS dname, sLat, sLong, dLat, dLong;
 rwcDistances = FOREACH rwc GENERATE sname, dname, sLat, sLong, dLat, dLong, edu.rosehulman.openanalysis.CalcDistance(sLat, sLong, dLat, dLong) AS distance;
 
+dRWC = DISTINCT rwcDistances;
 ordered = ORDER rwcDistances BY distance DESC;
 
 STORE ordered into '$outputLocation' using PigStorage(',');
