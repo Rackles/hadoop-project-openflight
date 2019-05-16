@@ -17,7 +17,7 @@ rwc = FOREACH routesWithCoordinates GENERATE airportsSourceRoutes::routes::sourc
 rwcDistances = FOREACH rwc GENERATE sname, dname, sLat, sLong, dLat, dLong, edu.rosehulman.openanalysis.CalcDistance(sLat, sLong, dLat, dLong) AS distance;
 
 dRWC = DISTINCT rwcDistances;
-ordered = ORDER rwcDistances BY distance DESC;
+ordered = ORDER dRWC BY distance DESC;
 
 limited = LIMIT ordered $limit;
 
