@@ -21,4 +21,4 @@ ordered = ORDER dRWC BY distance DESC;
 
 limited = LIMIT ordered $limit;
 
-STORE ordered into '$outputLocation' using PigStorage(',');
+STORE limited into '$outputLocation' using PigStorage(',');
