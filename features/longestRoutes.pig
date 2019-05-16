@@ -19,4 +19,6 @@ rwcDistances = FOREACH rwc GENERATE sname, dname, sLat, sLong, dLat, dLong, edu.
 dRWC = DISTINCT rwcDistances;
 ordered = ORDER rwcDistances BY distance DESC;
 
+limited = LIMIT ordered $limit;
+
 STORE ordered into '$outputLocation' using PigStorage(',');
