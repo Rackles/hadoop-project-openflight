@@ -10,10 +10,10 @@ sourceAirports = FOREACH airports GENERATE airportID AS sID, latitude AS sLat, l
 destAirports = FOREACH airports GENERATE airportID AS dID, latitude AS dLat, longitude as dLong;
 
 airportsSourceRoutes = JOIN sourceAirports BY sID, routes BY sourceID;
-airportsDestRoutes = JOIN destAirports BY dID, routes BY destinationID;
-routesWithCoordinates = JOIN airportsSourceRoutes BY sourceID, airportsDestRoutes by destinationID;
+-- airportsDestRoutes = JOIN destAirports BY dID, routes BY destinationID;
+routesWithCoordinates = JOIN airportsSourceRoutes BY sourceID, destAirports by dID;
 
-rwc = FOREACH routesWithCoordinates GENERATE source AS sname, destination AS dname, sLat, sLong, dLat, dLong;
+rwc = FOREACH routesWithCoordinates GENERATE airportsSourceRoutes::routes::source AS sname, airportsSourceRoutes::routes::destination AS dname, sLat, sLong, dLat, dLong;
 rwcDistances = FOREACH rwc GENERATE sname, dname, sLat, sLong, dLat, dLong, edu.rosehulman.openanalysis.CalcDistance(sLat, sLong, dLat, dLong) AS distance;
 
 ordered = ORDER rwcDistances BY distance DESC;
