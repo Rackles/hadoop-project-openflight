@@ -39,7 +39,7 @@
         <sqoop xmlns="uri:oozie:sqoop-action:0.2">
             <job-tracker>${jobTracker}</job-tracker>
             <name-node>${nameNode}</name-node>
-            <command>export --connect jdbc:postgresql://193.196.37.32:5432/openanalysis --username postgres --password admin -m 1 --table ${TableName} --export-dir ${exportDir} --input-fields-terminated-by , --input-null-string \\N --input-null-non-string \\N</command>
+            <command>export --connect jdbc:postgresql://193.196.37.32:5432/openanalysis --username postgres --password admin -m 1 --table ${TableName} --export-dir ${outputLocation} --input-fields-terminated-by , --input-null-string \\N --input-null-non-string \\N</command>
         </sqoop>
         <ok to="end"/>
         <error to="SqoopKill"/>
