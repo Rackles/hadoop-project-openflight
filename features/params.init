@@ -3,4 +3,4 @@ routesLocation=/tmp/openflight/routes.dat
 airportsLocation=/tmp/openflight/airports.dat
 airlinesLocation=/tmp/openflight/airlines.dat
 planesLocation=/tmp/openflight/planes.dat
-outputLocation=/tmp/openflight/output/highAltitudes/
+outputLocation=/tmp/openflight/output/longestRoutes/
