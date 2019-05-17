@@ -1,16 +1,16 @@
 routes = LOAD '$routesLocation' using PigStorage(',') AS (airlineIATA:chararray, airID:int, source:chararray, sourceID:int, destination:chararray, destinationID:int, codeshare:chararray, stops:int, equipment:chararray);
-airports = LOAD '$airportsLocation' using PigStorage(',') AS (id:int, name:chararray, city:chararray, country:chararray, iata:chararray, icao:chararray, latitude:double, longitude:double, alt: double, time:double, dst:chararray, tzdbtz:chararray, type:chararray, source:chararray);
+airports = LOAD '$airportsLocation' using PigStorage(',') AS (airportid:int, airportname:chararray, city:chararray, country:chararray, iata:chararray, icao:chararray, latitude:double, longitude:double, alt: double, time:double, dst:chararray, tzdbtz:chararray, type:chararray, source:chararray);
 
 filteredroutes = FILTER routes BY airID is not null;
 groutes = GROUP filteredroutes BY sourceID;
-countRoutes = FOREACH groutes GENERATE group AS sourceID, filteredroutes.latitude, filteredroutes.longitude, COUNT(filteredroutes) AS count;
+countRoutes = FOREACH groutes GENERATE group as sourceID, COUNT(filteredroutes) AS connections;
 
-connectedAirports = JOIN countRoutes BY sourceID LEFT OUTER, airports BY id;
+connectedAirports = JOIN countRoutes BY sourceID LEFT OUTER, airports BY airportid;
 
-groupConnected = GROUP connectedAirports BY (id, name, count);
+connected = FOREACH connectedAirports GENERATE airportid, airportname, connections, latitude, longitude;
 
-connected = FOREACH groupConnected GENERATE FLATTEN(group), connectedAirports.latitude, connectedAirports.longitude;
+result = ORDER connected BY connections DESC;
 
-result = ORDER connected BY count DESC;
+limited = LIMIT result $limit;
 
-STORE result INTO '$outputLocation' using PigStorage(',');
+STORE limited INTO '$outputLocation' using PigStorage(',');
