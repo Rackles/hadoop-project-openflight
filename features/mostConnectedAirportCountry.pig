@@ -14,7 +14,7 @@ connected_airports_country = JOIN count_airport_country BY airportID LEFT OUTER,
 
 groupConnected_country = GROUP connected_airports_country BY (id, name, count);
 
-connected_country = FOREACH groupConnected_country GENERATE FLATTEN(group), connected_airports_country.latitude, connected_airports_country.longitude;
+connected_country = FOREACH groupConnected_country GENERATE FLATTEN(group), connected_airports_country.latitude as latitude, connected_airports_country.longitude as longitude;
 
 result_country = ORDER connected_country BY count DESC;
 

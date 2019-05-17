@@ -9,7 +9,7 @@ connectedAirports = JOIN countRoutes BY sourceID LEFT OUTER, airports BY id;
 
 groupConnected = GROUP connectedAirports BY (id, name, count);
 
-connected = FOREACH groupConnected GENERATE FLATTEN(group), connectedAirports.latitude, connectedAirports.longitude;
+connected = FOREACH groupConnected GENERATE FLATTEN(group), connectedAirports.latitude as latitude, connectedAirports.longitude as longitude;
 
 result = ORDER connected BY count DESC;
 
