@@ -8,14 +8,16 @@ country_routes = FOREACH (JOIN slim_routes BY destinationID LEFT OUTER, airports
 
 connectedAirportCountry_unique = DISTINCT country_routes;
 
-count_airport_country = FOREACH (GROUP connectedAirportCountry_unique BY sourceID) GENERATE group as airportID, latitude, longitude, COUNT(connectedAirportCountry_unique) as count;
+count_airport_country = FOREACH (GROUP connectedAirportCountry_unique BY sourceID) GENERATE group as sourceID, COUNT(connectedAirportCountry_unique) as count;
 
-connected_airports_country = JOIN count_airport_country BY airportID LEFT OUTER, airports BY id;
+connected_airports_country = JOIN count_airport_country BY sourceID LEFT OUTER, airports BY id;
 
 connected_country = FOREACH connected_airports_country GENERATE id, name, count, latitude, longitude;
 
-result_country = ORDER connected_country BY count DESC;
+filter_result = FILTER connected_country BY name!='';
 
-limited = LIMIT result_country $limit;
+result_country = ORDER filter_result BY count DESC;
+
+limited = LIMIT result_country 10;
 
 STORE limited INTO '$outputLocation' using PigStorage(',');
