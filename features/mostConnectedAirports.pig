@@ -7,10 +7,12 @@ countRoutes = FOREACH groutes GENERATE group, COUNT(filteredroutes) AS count;
 
 connectedAirports = JOIN countRoutes BY sourceID LEFT OUTER, airports BY id;
 
-groupConnected = GROUP connectedAirports BY (id, name, count);
+groupConnected = GROUP connectedAirports BY (id, name, latitude, longitude, count);
 
-connected = FOREACH groupConnected GENERATE FLATTEN(group), connectedAirports::latitude as latitude, connectedAirports::longitude as longitude;
+connected = FOREACH groupConnected GENERATE FLATTEN(group);
 
 result = ORDER connected BY count DESC;
 
-STORE result INTO '$outputLocation' using PigStorage(',');
+limited = LIMIT result $limit;
+
+STORE limited INTO '$outputLocation' using PigStorage(',');
