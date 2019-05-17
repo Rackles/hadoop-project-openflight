@@ -12,10 +12,10 @@ count_airport_country = FOREACH (GROUP connectedAirportCountry_unique BY sourceI
 
 connected_airports_country = JOIN count_airport_country BY airportID LEFT OUTER, airports BY id;
 
-groupConnected_country = GROUP connected_airports_country BY (id, name, count);
-
-connected_country = FOREACH groupConnected_country GENERATE FLATTEN(group), connected_airports_country.latitude as latitude, connected_airports_country.longitude as longitude;
+connected_country = FOREACH connected_airports_country GENERATE id, name, count, latitude, longitude;
 
 result_country = ORDER connected_country BY count DESC;
 
-STORE result_country INTO '$outputLocation' using PigStorage(',');
+limited = LIMIT result_country $limit;
+
+STORE limited INTO '$outputLocation' using PigStorage(',');

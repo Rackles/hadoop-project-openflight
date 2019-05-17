@@ -7,9 +7,7 @@ countRoutes = FOREACH groutes GENERATE group as sourceID, COUNT(filteredroutes) 
 
 connectedAirports = JOIN countRoutes BY sourceID LEFT OUTER, airports BY airportid;
 
-groupConnected = GROUP connectedAirports BY (airportid, airportname, connections, latitude, longitude);
-
-connected = FOREACH groupConnected GENERATE FLATTEN(group);
+connected = FOREACH connectedAirports GENERATE airportid, airportname, connections, latitude, longitude;
 
 result = ORDER connected BY connections DESC;
 
