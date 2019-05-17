@@ -3,7 +3,7 @@ airports = LOAD '$airportsLocation' using PigStorage(',') AS (id:int, name:chara
 
 filteredroutes = FILTER routes BY airID is not null;
 groutes = GROUP filteredroutes BY sourceID;
-countRoutes = FOREACH groutes GENERATE group, COUNT(filteredroutes) AS count;
+countRoutes = FOREACH groutes GENERATE group as sourceID, COUNT(filteredroutes) AS count;
 
 connectedAirports = JOIN countRoutes BY sourceID LEFT OUTER, airports BY id;
 
