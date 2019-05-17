@@ -7,11 +7,11 @@ countRoutes = FOREACH groutes GENERATE group as sourceID, COUNT(filteredroutes) 
 
 connectedAirports = JOIN countRoutes BY sourceID LEFT OUTER, airports BY id;
 
-groupConnected = GROUP connectedAirports BY (id, name, latitude, longitude, count);
+groupConnected = GROUP connectedAirports BY (airportid, airportname, count as connections, latitude, longitude);
 
 connected = FOREACH groupConnected GENERATE FLATTEN(group);
 
-result = ORDER connected BY count DESC;
+result = ORDER connected BY connections DESC;
 
 limited = LIMIT result $limit;
 
